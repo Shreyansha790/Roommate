@@ -82,9 +82,9 @@ export default async function ListingDetailPage({ params }: { params: { id: stri
             <p className="mt-2 text-sm">
               <strong>Phone:</strong> {phoneVisible ? poster?.phone || "Not available" : "Hidden until both users exchange one message"}
             </p>
-            <Button asChild className="mt-4 w-full">
-              <Link href={messageHref}>{auth.user ? "Send Message" : "Login to Send Message"}</Link>
-            </Button>
+            <Link href={messageHref} className="mt-4 block">
+              <Button className="w-full">{auth.user ? "Send Message" : "Login to Send Message"}</Button>
+            </Link>
           </div>
         </aside>
       </div>
