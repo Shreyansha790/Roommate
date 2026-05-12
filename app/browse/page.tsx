@@ -1,0 +1,125 @@
+import Link from "next/link";
+import { createClient } from "@/lib/supabase-server";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { BookmarkButton } from "./bookmark-button";
+
+const ROOM_TYPES = ["single", "shared", "entire_flat"] as const;
+
+type BrowsePageProps = {
+  searchParams: {
+    city?: string;
+    locality?: string;
+    minRent?: string;
+    maxRent?: string;
+    roomType?: string;
+    availableFrom?: string;
+  };
+};
+
+export default async function BrowsePage({ searchParams }: BrowsePageProps) {
+  const supabase = createClient();
+  const { data: auth } = await supabase.auth.getUser();
+
+  const city = searchParams.city || "";
+  const locality = searchParams.locality || "";
+  const minRent = Number(searchParams.minRent || 0);
+  const maxRent = Number(searchParams.maxRent || 100000);
+  const roomType = searchParams.roomType || "";
+  const availableFrom = searchParams.availableFrom || "";
+
+  let query = supabase
+    .from("listings")
+    .select("id,title,locality,city,rent,room_type,available_from,photos,user_id,profiles!listings_user_id_fkey(full_name,is_verified)")
+    .eq("is_active", true)
+    .gte("rent", minRent)
+    .lte("rent", maxRent)
+    .order("created_at", { ascending: false });
+
+  if (city) query = query.eq("city", city);
+  if (locality) query = query.ilike("locality", `%${locality}%`);
+  if (roomType) query = query.eq("room_type", roomType);
+  if (availableFrom) query = query.gte("available_from", availableFrom);
+
+  const [{ data: listings }, { data: cities }] = await Promise.all([
+    query,
+    supabase.from("listings").select("city").eq("is_active", true)
+  ]);
+
+  const uniqueCities = [...new Set((cities || []).map((row) => row.city))];
+
+  return (
+    <main className="mx-auto max-w-7xl p-4 sm:p-6">
+      <h1 className="mb-4 text-2xl font-semibold sm:text-3xl">Browse Listings</h1>
+      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <aside className="rounded-lg border p-4">
+          <form className="space-y-4">
+            <div>
+              <label className="mb-1 block text-sm font-medium">City</label>
+              <select name="city" defaultValue={city} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                <option value="">All cities</option>
+                {uniqueCities.map((item) => (
+                  <option key={item} value={item}>{item}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm font-medium">Locality</label>
+              <Input name="locality" placeholder="Search locality" defaultValue={locality} />
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm font-medium">Rent range (₹)</label>
+              <div className="grid grid-cols-2 gap-2">
+                <Input type="number" min={0} name="minRent" defaultValue={minRent} placeholder="Min" />
+                <Input type="number" min={0} name="maxRent" defaultValue={maxRent} placeholder="Max" />
+              </div>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm font-medium">Room type</label>
+              <select name="roomType" defaultValue={roomType} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
+                <option value="">Any</option>
+                {ROOM_TYPES.map((type) => <option key={type} value={type}>{type.replace("_", " ")}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm font-medium">Available from</label>
+              <Input type="date" name="availableFrom" defaultValue={availableFrom} />
+            </div>
+
+            <Button type="submit" className="w-full">Apply Filters</Button>
+          </form>
+        </aside>
+
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {(listings || []).map((listing) => {
+            const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
+            return (
+              <article key={listing.id} className="group relative overflow-hidden rounded-lg border bg-white">
+                <Link href={`/listings/${listing.id}`} className="block">
+                  <img src={listing.photos?.[0] || "https://placehold.co/640x400?text=No+Photo"} alt={listing.title} className="h-44 w-full object-cover" />
+                  <div className="space-y-1 p-4">
+                    <h2 className="line-clamp-1 text-lg font-semibold">{listing.title}</h2>
+                    <p className="text-sm text-muted-foreground">{listing.locality}, {listing.city}</p>
+                    <p className="text-base font-medium">₹{Number(listing.rent).toLocaleString()}/month</p>
+                    <p className="text-sm">Room type: <span className="capitalize">{listing.room_type.replace("_", " ")}</span></p>
+                    <p className="text-sm">Available from: {listing.available_from || "Flexible"}</p>
+                    {profile?.is_verified ? <span className="inline-flex rounded-full bg-emerald-100 px-2 py-1 text-xs font-medium text-emerald-700">Verified</span> : null}
+                  </div>
+                </Link>
+                <div className="flex items-center justify-between border-t p-3">
+                  <Button asChild size="sm"><Link href={`/listings/${listing.id}`}>View Details</Link></Button>
+                  <BookmarkButton listingId={listing.id} userId={auth.user?.id || null} />
+                </div>
+              </article>
+            );
+          })}
+          {!listings?.length ? <p className="text-sm text-muted-foreground">No listings match your filters.</p> : null}
+        </section>
+      </div>
+    </main>
+  );
+}
