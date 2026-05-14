@@ -2,10 +2,11 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient, hasSupabaseEnv } from "@/lib/supabase";
+import { createClient, hasSupabaseEnv } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { GoogleLoginButton } from "@/components/auth/google-login-button";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -45,10 +46,22 @@ export default function LoginPage() {
     router.push("/");
   }
 
-  async function onGoogle() {
-    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/` } });
-    if (error) setErrorMessage(error.message);
-  }
-
-  return <main className="mx-auto max-w-md p-6"><h1 className="mb-6 text-2xl font-semibold">Log in</h1>{errorMessage ? <p className="mb-4 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">{errorMessage}</p> : null}<form className="space-y-4" onSubmit={onLogin}><div><Label htmlFor="email">Email</Label><Input id="email" name="email" type="email" required /></div><div><Label htmlFor="password">Password</Label><Input id="password" name="password" type="password" required /></div><Button className="w-full" disabled={loading}>{loading ? "Signing in..." : "Sign in"}</Button></form><Button variant="outline" className="mt-4 w-full" onClick={onGoogle}>Continue with Google</Button></main>;
+  return (
+    <main className="mx-auto max-w-md p-6">
+      <h1 className="mb-6 text-2xl font-semibold">Log in</h1>
+      {errorMessage ? <p className="mb-4 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">{errorMessage}</p> : null}
+      <form className="space-y-4" onSubmit={onLogin}>
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" name="email" type="email" required />
+        </div>
+        <div>
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" name="password" type="password" required />
+        </div>
+        <Button className="w-full" disabled={loading}>{loading ? "Signing in..." : "Sign in"}</Button>
+      </form>
+      <GoogleLoginButton className="mt-4 w-full" onError={setErrorMessage} />
+    </main>
+  );
 }
