@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase-server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BookmarkButton } from "./bookmark-button";
+import { CompatibilityBadge } from "@/components/CompatibilityBadge";
 
 const ROOM_TYPES = ["single", "shared", "entire_flat"] as const;
 
@@ -45,6 +46,23 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
     query,
     supabase.from("listings").select("city").eq("is_active", true)
   ]);
+
+  const compatibilityByUserId = new Map<string, number>();
+  if (auth.user?.id) {
+    const { data: myPref } = await supabase.from("roommate_preferences").select("id").eq("user_id", auth.user.id).maybeSingle();
+
+    if (myPref?.id) {
+      const listingOwnerIds = [...new Set((listings || []).map((listing) => listing.user_id))];
+      const { data: listingOwnerPrefs } = await supabase.from("roommate_preferences").select("id,user_id").in("user_id", listingOwnerIds);
+
+      if (listingOwnerPrefs?.length) {
+        await Promise.all(listingOwnerPrefs.map(async (pref) => {
+          const { data } = await supabase.rpc("compatibility_score", { pref_a_id: myPref.id, pref_b_id: pref.id });
+          compatibilityByUserId.set(pref.user_id, data || 0);
+        }));
+      }
+    }
+  }
 
   const uniqueCities = [...new Set((cities || []).map((row) => row.city))];
 
@@ -97,12 +115,17 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {(listings || []).map((listing) => {
             const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
+            const compatibilityScore = compatibilityByUserId.get(listing.user_id) ?? -1;
+
             return (
               <article key={listing.id} className="group relative overflow-hidden rounded-lg border bg-white">
                 <Link href={`/listings/${listing.id}`} className="block">
                   <img src={listing.photos?.[0] || "https://placehold.co/640x400?text=No+Photo"} alt={listing.title} className="h-44 w-full object-cover" />
-                  <div className="space-y-1 p-4">
-                    <h2 className="line-clamp-1 text-lg font-semibold">{listing.title}</h2>
+                  <div className="space-y-2 p-4">
+                    <div className="flex items-start justify-between gap-2">
+                      <h2 className="line-clamp-1 text-lg font-semibold">{listing.title}</h2>
+                      <CompatibilityBadge score={compatibilityScore} />
+                    </div>
                     <p className="text-sm text-muted-foreground">{listing.locality}, {listing.city}</p>
                     <p className="text-base font-medium">₹{Number(listing.rent).toLocaleString()}/month</p>
                     <p className="text-sm">Room type: <span className="capitalize">{listing.room_type.replace("_", " ")}</span></p>

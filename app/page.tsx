@@ -42,14 +42,20 @@ export default function HomePage() {
         <div className="grid flex-1 items-center gap-12 lg:grid-cols-[1.1fr,0.9fr]">
           <div className="space-y-7">
             <p className="inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/15 px-3 py-1 text-sm text-cyan-100">
-              Find your next home, or your next roommate.
+              Built for better roommate matching
             </p>
             <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-              A lively home base for both <span className="text-cyan-300">browsing</span> and <span className="text-violet-300">listing</span> rooms.
+              Find flatmates you&apos;ll actually like
             </h1>
             <p className="max-w-xl text-lg text-slate-200/90">
-              Explore available spots, publish your own place, and connect with people who match your lifestyle — all in one clean flow.
+              80M Indians search for flatmates every year. Most get ghosted. Roommate matches you on lifestyle — not just location and rent.
             </p>
+
+            <div className="flex flex-wrap gap-2 pt-1">
+              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-100">🔒 Phone revealed after mutual chat</span>
+              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-100">🎯 Compatibility score on every listing</span>
+              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-100">✅ Verified profiles</span>
+            </div>
             <div className="flex flex-wrap gap-3">
               <Link href="/browse" className={cn(buttonVariants({ size: "lg" }), "bg-cyan-400 text-slate-950 hover:bg-cyan-300")}>
                 Start Browsing
