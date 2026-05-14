@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
@@ -197,7 +198,7 @@ export default function PostListingForm() {
           {!!previewUrls.length && (
             <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
               {previewUrls.map((url, idx) => (
-                <img key={url + idx} src={url} alt={`Preview ${idx + 1}`} className="h-24 w-full rounded-md object-cover" />
+                <Image key={url + idx} src={url} alt={`Preview ${idx + 1}`} width={240} height={96} className="h-24 w-full rounded-md object-cover" />
               ))}
             </div>
           )}
