@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { GlassCard, GlowBadge } from "@/components/ui/premium";
 
 const CITIES = ["Bangalore", "Mumbai", "Delhi", "Hyderabad", "Pune"] as const;
 const ROOM_TYPES = [
@@ -126,7 +127,8 @@ export default function PostListingForm() {
 
   return (
     <main className="mx-auto max-w-3xl p-6">
-      <h1 className="mb-6 text-3xl font-semibold">Post a Listing</h1>
+      <GlassCard className="p-6">
+      <div className="mb-6 flex items-center justify-between"><h1 className="text-3xl font-semibold">Post a Listing</h1><GlowBadge>30-day boost</GlowBadge></div>
       <form className="space-y-5" onSubmit={onSubmit}>
         <div>
           <Label htmlFor="title">Title</Label>
@@ -216,8 +218,9 @@ export default function PostListingForm() {
           </div>
         </fieldset>
 
-        <Button type="submit" disabled={submitting}>{submitting ? "Posting..." : "Post listing"}</Button>
+        <Button type="submit" className="border-0 bg-gradient-to-r from-cyan-400 to-violet-500 text-slate-950" disabled={submitting}>{submitting ? "Posting..." : "Post listing"}</Button>
       </form>
+      </GlassCard>
     </main>
   );
 }

@@ -1,83 +1,31 @@
 import Link from "next/link";
-
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { FloatingPanel, GlassCard, GlowBadge } from "@/components/ui/premium";
 
-const featureCards = [
-  {
-    title: "Browse rooms fast",
-    description: "Filter by budget, city, and vibe to quickly discover roommate-friendly spaces.",
-  },
-  {
-    title: "List your place",
-    description: "Post your room or full apartment in minutes with photos, amenities, and house rules.",
-  },
-  {
-    title: "Match with confidence",
-    description: "Share preferences and compare fit so both renters and hosts feel good before chatting.",
-  },
-];
+const stats = [{ label: "Active seekers", value: "42K+" }, { label: "Verified hosts", value: "9.8K" }, { label: "Compatibility matches", value: "1.2M" }];
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
-      <div className="pointer-events-none absolute inset-0 bg-grid-texture opacity-40" />
-      <div className="pointer-events-none absolute -left-24 top-20 h-64 w-64 rounded-full bg-cyan-500/35 blur-3xl animate-float-slow" />
-      <div className="pointer-events-none absolute -right-16 top-32 h-72 w-72 rounded-full bg-violet-500/30 blur-3xl animate-float" />
-      <div className="pointer-events-none absolute bottom-8 left-1/3 h-56 w-56 rounded-full bg-fuchsia-500/25 blur-3xl animate-float-reverse" />
-
-      <section className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 py-12">
-        <header className="mb-16 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-md">
-          <p className="text-lg font-semibold tracking-tight">Roommate Finder</p>
-          <div className="flex gap-2">
-            <Link href="/browse" className={cn(buttonVariants({ variant: "outline" }), "text-white hover:bg-white/15")}>
-              Browse
-            </Link>
-            <Link href="/post" className={cn(buttonVariants({ variant: "secondary" }), "bg-white text-slate-900 hover:bg-slate-100")}>
-              List a Place
-            </Link>
-          </div>
-        </header>
-
-        <div className="grid flex-1 items-center gap-12 lg:grid-cols-[1.1fr,0.9fr]">
-          <div className="space-y-7">
-            <p className="inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/15 px-3 py-1 text-sm text-cyan-100">
-              Built for better roommate matching
-            </p>
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-              Find flatmates you&apos;ll actually like
-            </h1>
-            <p className="max-w-xl text-lg text-slate-200/90">
-              80M Indians search for flatmates every year. Most get ghosted. Roommate matches you on lifestyle — not just location and rent.
-            </p>
-
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-100">🔒 Phone revealed after mutual chat</span>
-              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-100">🎯 Compatibility score on every listing</span>
-              <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs text-slate-100">✅ Verified profiles</span>
+    <main className="relative min-h-screen overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 bg-grid-texture opacity-30" />
+      <section className="relative mx-auto max-w-7xl px-6 py-12 sm:py-20">
+        <GlassCard className="p-8 sm:p-12">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <div className="space-y-6">
+              <GlowBadge className="animate-glow">Next-gen roommate platform</GlowBadge>
+              <h1 className="text-4xl font-semibold leading-tight sm:text-6xl">Discover flatmates that match your <span className="bg-gradient-to-r from-cyan-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent">lifestyle energy</span>.</h1>
+              <p className="text-slate-300">Immersive roommate matching with social-first profiles, real compatibility signals, and premium discovery flows.</p>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/browse" className={cn(buttonVariants({ size: "lg" }), "border-0 bg-gradient-to-r from-cyan-400 to-violet-500 text-slate-950")}>Explore listings</Link>
+                <Link href="/post" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "border-white/30 bg-white/10 text-white hover:bg-white/20")}>Post your space</Link>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/browse" className={cn(buttonVariants({ size: "lg" }), "bg-cyan-400 text-slate-950 hover:bg-cyan-300")}>
-                Start Browsing
-              </Link>
-              <Link href="/post" className={cn(buttonVariants({ size: "lg", variant: "secondary" }), "bg-violet-400 text-slate-950 hover:bg-violet-300")}>
-                Post a Listing
-              </Link>
-              <Link href="/signup" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "border-white/40 bg-transparent text-white hover:bg-white/10")}>
-                Create Account
-              </Link>
+            <div className="grid gap-4">
+              {stats.map((s) => <FloatingPanel key={s.label} className="p-5"><p className="text-3xl font-semibold text-cyan-200">{s.value}</p><p className="text-sm text-slate-300">{s.label}</p></FloatingPanel>)}
             </div>
           </div>
-
-          <div className="grid gap-4">
-            {featureCards.map((card) => (
-              <article key={card.title} className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-md transition-transform duration-300 hover:-translate-y-1 hover:bg-white/15">
-                <h2 className="mb-2 text-xl font-medium">{card.title}</h2>
-                <p className="text-slate-200/90">{card.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
+        </GlassCard>
       </section>
     </main>
   );
