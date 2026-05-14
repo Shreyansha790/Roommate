@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase-server";
 import { hasSupabaseEnv } from "@/lib/supabase";
 import { DEMO_LISTINGS, type DemoListing } from "@/lib/demo-data";
@@ -145,7 +146,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
             return (
               <article key={listing.id} className="group relative overflow-hidden rounded-lg border bg-white">
                 <Link href={`/listings/${listing.id}`} className="block">
-                  <img src={listing.photos?.[0] || "https://placehold.co/640x400?text=No+Photo"} alt={listing.title} className="h-44 w-full object-cover" />
+                  <Image src={listing.photos?.[0] || "https://placehold.co/640x400?text=No+Photo"} alt={listing.title} width={640} height={400} className="h-44 w-full object-cover" />
                   <div className="space-y-2 p-4">
                     <div className="flex items-start justify-between gap-2">
                       <h2 className="line-clamp-1 text-lg font-semibold">{listing.title}</h2>

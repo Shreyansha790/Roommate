@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
 import { buttonVariants } from "@/components/ui/button";
@@ -71,7 +72,7 @@ export default async function ListingDetailPage({ params }: { params: { id: stri
           <div className="rounded-lg border p-4">
             <h2 className="mb-3 text-lg font-semibold">Posted by</h2>
             <div className="flex items-center gap-3">
-              <img src={poster?.avatar_url || "https://placehold.co/80x80?text=User"} alt={poster?.full_name || "User"} className="h-12 w-12 rounded-full object-cover" />
+              <Image src={poster?.avatar_url || "https://placehold.co/80x80?text=User"} alt={poster?.full_name || "User"} width={80} height={80} className="h-12 w-12 rounded-full object-cover" />
               <div>
                 <p className="font-medium">{poster?.full_name || "Anonymous"}</p>
                 <p className="text-sm text-muted-foreground">{poster?.profession || "Profession not added"}</p>
