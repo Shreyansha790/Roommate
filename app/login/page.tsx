@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient, hasSupabaseEnv } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -18,9 +19,6 @@ export default function LoginPage() {
         <h1 className="mb-3 text-2xl font-semibold">Log in</h1>
         <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
           Authentication is currently disabled in this preview because Supabase environment variables are not configured yet.
-        </p>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> to enable email and Google login.
         </p>
       </main>
     );
@@ -42,11 +40,19 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/");
+    const next = searchParams.get("next") || "/";
+    router.push(next);
+    router.refresh();
   }
 
   async function onGoogle() {
-    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/` } });
+    const next = searchParams.get("next") || "/";
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`
+      }
+    });
     if (error) setErrorMessage(error.message);
   }
 
