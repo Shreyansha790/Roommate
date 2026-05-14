@@ -30,7 +30,7 @@ export default function HomePage() {
         <header className="mb-16 flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-md">
           <p className="text-lg font-semibold tracking-tight">Roommate Finder</p>
           <div className="flex gap-2">
-            <Link href="/browse" className={cn(buttonVariants({ variant: "ghost" }), "text-white hover:bg-white/15")}>
+            <Link href="/browse" className={cn(buttonVariants({ variant: "outline" }), "text-white hover:bg-white/15")}>
               Browse
             </Link>
             <Link href="/post" className={cn(buttonVariants({ variant: "secondary" }), "bg-white text-slate-900 hover:bg-slate-100")}>
