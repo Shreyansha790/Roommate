@@ -16,8 +16,11 @@ export default function LoginPage() {
     return (
       <main className="mx-auto max-w-md p-6">
         <h1 className="mb-3 text-2xl font-semibold">Log in</h1>
-        <p className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
-          Authentication is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your environment variables.
+        <p className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+          Authentication is currently disabled in this preview because Supabase environment variables are not configured yet.
+        </p>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Add <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> to enable email and Google login.
         </p>
       </main>
     );

@@ -1,11 +1,17 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-server";
+import { hasSupabaseEnv } from "@/lib/supabase";
+import { DEMO_LISTINGS, type DemoListing } from "@/lib/demo-data";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BookmarkButton } from "./bookmark-button";
 import { CompatibilityBadge } from "@/components/CompatibilityBadge";
 
 const ROOM_TYPES = ["single", "shared", "entire_flat"] as const;
+
+type ListingCard = DemoListing & {
+  profiles: DemoListing["profiles"] | DemoListing["profiles"][];
+};
 
 type BrowsePageProps = {
   searchParams: {
@@ -19,8 +25,9 @@ type BrowsePageProps = {
 };
 
 export default async function BrowsePage({ searchParams }: BrowsePageProps) {
+  const hasEnv = hasSupabaseEnv();
   const supabase = createClient();
-  const { data: auth } = await supabase.auth.getUser();
+  const { data: auth } = hasEnv ? await supabase.auth.getUser() : { data: { user: null } };
 
   const city = searchParams.city || "";
   const locality = searchParams.locality || "";
@@ -29,23 +36,42 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
   const roomType = searchParams.roomType || "";
   const availableFrom = searchParams.availableFrom || "";
 
-  let query = supabase
-    .from("listings")
-    .select("id,title,locality,city,rent,room_type,available_from,photos,user_id,profiles!listings_user_id_fkey(full_name,is_verified)")
-    .eq("is_active", true)
-    .gte("rent", minRent)
-    .lte("rent", maxRent)
-    .order("created_at", { ascending: false });
+  let listings: ListingCard[] = [];
+  let uniqueCities: string[] = [];
 
-  if (city) query = query.eq("city", city);
-  if (locality) query = query.ilike("locality", `%${locality}%`);
-  if (roomType) query = query.eq("room_type", roomType);
-  if (availableFrom) query = query.gte("available_from", availableFrom);
+  if (hasEnv) {
+    let query = supabase
+      .from("listings")
+      .select("id,title,locality,city,rent,room_type,available_from,photos,user_id,profiles!listings_user_id_fkey(full_name,is_verified)")
+      .eq("is_active", true)
+      .gte("rent", minRent)
+      .lte("rent", maxRent)
+      .order("created_at", { ascending: false });
 
-  const [{ data: listings }, { data: cities }] = await Promise.all([
-    query,
-    supabase.from("listings").select("city").eq("is_active", true)
-  ]);
+    if (city) query = query.eq("city", city);
+    if (locality) query = query.ilike("locality", `%${locality}%`);
+    if (roomType) query = query.eq("room_type", roomType);
+    if (availableFrom) query = query.gte("available_from", availableFrom);
+
+    const [{ data: dbListings }, { data: cities }] = await Promise.all([
+      query,
+      supabase.from("listings").select("city").eq("is_active", true)
+    ]);
+
+    listings = (dbListings || []) as ListingCard[];
+    uniqueCities = [...new Set((cities || []).map((row) => row.city))];
+  } else {
+    listings = DEMO_LISTINGS.filter((listing) => {
+      if (city && listing.city !== city) return false;
+      if (locality && !listing.locality.toLowerCase().includes(locality.toLowerCase())) return false;
+      if (listing.rent < minRent || listing.rent > maxRent) return false;
+      if (roomType && listing.room_type !== roomType) return false;
+      if (availableFrom && listing.available_from < availableFrom) return false;
+      return true;
+    });
+
+    uniqueCities = [...new Set(DEMO_LISTINGS.map((row) => row.city))];
+  }
 
   const compatibilityByUserId = new Map<string, number>();
   if (auth.user?.id) {
@@ -63,8 +89,6 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
       }
     }
   }
-
-  const uniqueCities = [...new Set((cities || []).map((row) => row.city))];
 
   return (
     <main className="mx-auto max-w-7xl p-4 sm:p-6">
@@ -113,6 +137,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
         </aside>
 
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {!hasEnv ? <p className="sm:col-span-2 xl:col-span-3 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">Supabase environment variables are missing, so you are viewing demo listings.</p> : null}
           {(listings || []).map((listing) => {
             const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
             const compatibilityScore = compatibilityByUserId.get(listing.user_id) ?? -1;
