@@ -6,7 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Gallery } from "./gallery";
 
 export default async function ListingDetailPage({ params }: { params: { id: string } }) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: auth } = await supabase.auth.getUser();
 
   const { data: listing } = await supabase
