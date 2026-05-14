@@ -27,7 +27,7 @@ type BrowsePageProps = {
 
 export default async function BrowsePage({ searchParams }: BrowsePageProps) {
   const hasEnv = hasSupabaseEnv();
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: auth } = hasEnv ? await supabase.auth.getUser() : { data: { user: null } };
 
   const city = searchParams.city || "";
