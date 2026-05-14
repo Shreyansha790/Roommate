@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase-server";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Gallery } from "./gallery";
 
 export default async function ListingDetailPage({ params }: { params: { id: string } }) {
@@ -82,9 +82,7 @@ export default async function ListingDetailPage({ params }: { params: { id: stri
             <p className="mt-2 text-sm">
               <strong>Phone:</strong> {phoneVisible ? poster?.phone || "Not available" : "Hidden until both users exchange one message"}
             </p>
-            <Button asChild className="mt-4 w-full">
-              <Link href={messageHref}>{auth.user ? "Send Message" : "Login to Send Message"}</Link>
-            </Button>
+            <Link href={messageHref} className={buttonVariants({ className: "mt-4 w-full" })}>{auth.user ? "Send Message" : "Login to Send Message"}</Link>
           </div>
         </aside>
       </div>
