@@ -2,15 +2,28 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase";
+import { createClient, hasSupabaseEnv } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
-  const supabase = createClient();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  if (!hasSupabaseEnv()) {
+    return (
+      <main className="mx-auto max-w-md p-6">
+        <h1 className="mb-3 text-2xl font-semibold">Log in</h1>
+        <p className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+          Authentication is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your environment variables.
+        </p>
+      </main>
+    );
+  }
+
+  const supabase = createClient();
 
   async function onLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,12 +34,18 @@ export default function LoginPage() {
       password: String(formData.get("password"))
     });
     setLoading(false);
-    if (!error) router.push("/");
+    if (error) {
+      setErrorMessage(error.message);
+      return;
+    }
+
+    router.push("/");
   }
 
   async function onGoogle() {
-    await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/` } });
+    const { error } = await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: `${window.location.origin}/` } });
+    if (error) setErrorMessage(error.message);
   }
 
-  return <main className="mx-auto max-w-md p-6"><h1 className="mb-6 text-2xl font-semibold">Log in</h1><form className="space-y-4" onSubmit={onLogin}><div><Label htmlFor="email">Email</Label><Input id="email" name="email" type="email" required /></div><div><Label htmlFor="password">Password</Label><Input id="password" name="password" type="password" required /></div><Button className="w-full" disabled={loading}>{loading ? "Signing in..." : "Sign in"}</Button></form><Button variant="outline" className="mt-4 w-full" onClick={onGoogle}>Continue with Google</Button></main>;
+  return <main className="mx-auto max-w-md p-6"><h1 className="mb-6 text-2xl font-semibold">Log in</h1>{errorMessage ? <p className="mb-4 rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">{errorMessage}</p> : null}<form className="space-y-4" onSubmit={onLogin}><div><Label htmlFor="email">Email</Label><Input id="email" name="email" type="email" required /></div><div><Label htmlFor="password">Password</Label><Input id="password" name="password" type="password" required /></div><Button className="w-full" disabled={loading}>{loading ? "Signing in..." : "Sign in"}</Button></form><Button variant="outline" className="mt-4 w-full" onClick={onGoogle}>Continue with Google</Button></main>;
 }
