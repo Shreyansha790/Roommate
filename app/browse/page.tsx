@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-server";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BookmarkButton } from "./bookmark-button";
 
@@ -111,7 +111,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
                   </div>
                 </Link>
                 <div className="flex items-center justify-between border-t p-3">
-                  <Button asChild size="sm"><Link href={`/listings/${listing.id}`}>View Details</Link></Button>
+                  <Link href={`/listings/${listing.id}`} className={buttonVariants({ size: "sm" })}>View Details</Link>
                   <BookmarkButton listingId={listing.id} userId={auth.user?.id || null} />
                 </div>
               </article>
