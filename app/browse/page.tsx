@@ -33,8 +33,8 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
 
   const city = searchParams.city || "";
   const locality = searchParams.locality || "";
-  const minRent = Number(searchParams.minRent || 0);
-  const maxRent = Number(searchParams.maxRent || 100000);
+  const minRent = searchParams.minRent ? Number(searchParams.minRent) : 0;
+  const maxRent = searchParams.maxRent ? Number(searchParams.maxRent) : 1000000;
   const roomType = searchParams.roomType || "";
   const availableFrom = searchParams.availableFrom || "";
 
@@ -117,8 +117,8 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
             <div>
               <label className="mb-1 block text-sm font-medium">Rent range (₹)</label>
               <div className="grid grid-cols-2 gap-2">
-                <Input type="number" min={0} name="minRent" defaultValue={minRent} placeholder="Min" />
-                <Input type="number" min={0} name="maxRent" defaultValue={maxRent} placeholder="Max" />
+                <Input type="number" min={0} name="minRent" defaultValue={minRent || ""} placeholder="Min" />
+                <Input type="number" min={0} name="maxRent" defaultValue={maxRent === 1000000 ? "" : maxRent} placeholder="Max" />
               </div>
             </div>
 
@@ -148,7 +148,7 @@ export default async function BrowsePage({ searchParams }: BrowsePageProps) {
             return (
               <article key={listing.id} className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/70 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_40px_-28px_rgba(34,211,238,0.7)]">
                 <Link href={`/listings/${listing.id}`} className="block">
-                  <Image src={listing.photos?.[0] || "https://placehold.co/640x400?text=No+Photo"} alt={listing.title} width={640} height={400} className="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
+                  <Image src={listing.photos?.[0] || "https://placehold.co/640x400?text=No+Photo"} alt={listing.title} width={640} height={400} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" priority={true} className="h-48 w-full object-cover transition duration-500 group-hover:scale-105" />
                   <div className="space-y-2 p-4 text-slate-100">
                     <div className="flex items-start justify-between gap-2">
                       <h2 className="line-clamp-1 text-lg font-semibold">{listing.title}</h2>
