@@ -126,7 +126,7 @@ export default function PostListingForm() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl p-6">
+    <main className="mx-auto max-w-3xl p-6 text-slate-900">
       <GlassCard className="p-6">
       <div className="mb-6 flex items-center justify-between"><h1 className="text-3xl font-semibold">Post a Listing</h1><GlowBadge>30-day boost</GlowBadge></div>
       <form className="space-y-5" onSubmit={onSubmit}>
@@ -152,12 +152,12 @@ export default function PostListingForm() {
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <Label htmlFor="locality">Locality</Label>
-            <Input id="locality" name="locality" required />
+            <Input id="locality" name="locality" required className="bg-white" />
             {errors.locality && <p className="mt-1 text-sm text-red-600">{errors.locality}</p>}
           </div>
           <div>
             <Label htmlFor="city">City</Label>
-            <select id="city" name="city" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" defaultValue="">
+            <select id="city" name="city" className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-slate-900" defaultValue="">
               <option value="" disabled>Select city</option>
               {CITIES.map((city) => <option key={city} value={city}>{city}</option>)}
             </select>
@@ -170,32 +170,32 @@ export default function PostListingForm() {
             <Label htmlFor="rent">Monthly Rent</Label>
             <div className="relative">
               <span className="pointer-events-none absolute left-3 top-2.5 text-sm text-muted-foreground">₹</span>
-              <Input id="rent" name="rent" type="number" min="1" className="pl-7" required />
+              <Input id="rent" name="rent" type="number" min="1" className="pl-7 bg-white" required />
             </div>
             {errors.rent && <p className="mt-1 text-sm text-red-600">{errors.rent}</p>}
           </div>
           <div>
             <Label htmlFor="deposit">Security Deposit</Label>
-            <Input id="deposit" name="deposit" type="number" min="0" required />
+            <Input id="deposit" name="deposit" type="number" min="0" className="bg-white" required />
             {errors.deposit && <p className="mt-1 text-sm text-red-600">{errors.deposit}</p>}
           </div>
         </div>
 
         <div>
           <Label htmlFor="availableFrom">Available From</Label>
-          <Input id="availableFrom" name="availableFrom" type="date" required />
+          <Input id="availableFrom" name="availableFrom" type="date" className="bg-white" required />
           {errors.availableFrom && <p className="mt-1 text-sm text-red-600">{errors.availableFrom}</p>}
         </div>
 
         <div>
           <Label htmlFor="description">Description</Label>
-          <Textarea id="description" name="description" rows={5} required />
+          <Textarea id="description" name="description" rows={5} className="bg-white" required />
           {errors.description && <p className="mt-1 text-sm text-red-600">{errors.description}</p>}
         </div>
 
         <div>
           <Label htmlFor="photos">Photos (max 5)</Label>
-          <Input id="photos" name="photos" type="file" accept="image/*" multiple onChange={onPhotoChange} />
+          <Input id="photos" name="photos" type="file" accept="image/*" className="bg-white" multiple onChange={onPhotoChange} />
           {errors.photos && <p className="mt-1 text-sm text-red-600">{errors.photos}</p>}
           {!!previewUrls.length && (
             <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
@@ -218,7 +218,7 @@ export default function PostListingForm() {
           </div>
         </fieldset>
 
-        <Button type="submit" className="border-0 bg-gradient-to-r from-cyan-400 to-violet-500 text-slate-950" disabled={submitting}>{submitting ? "Posting..." : "Post listing"}</Button>
+        <Button type="submit" className="border-0 bg-gradient-to-r from-cyan-400 to-violet-500 text-white" disabled={submitting}>{submitting ? "Posting..." : "Post listing"}</Button>
       </form>
       </GlassCard>
     </main>
