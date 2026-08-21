@@ -267,7 +267,9 @@ export default async function BrowsePage({ searchParams }: BrowseProps) {
         <section className="lg:col-span-3">
           {listings.length === 0 ? (
             <div className="bento-card p-12 text-center space-y-4 border-1.5 border-zinc-800">
-              <p className="font-mono text-3xl">🔍</p>
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-900 text-zinc-500 border border-zinc-800">
+                <SlidersHorizontal className="h-6 w-6" />
+              </div>
               <h3 className="text-xl font-black uppercase text-white">No Matching Spaces Located</h3>
               <p className="font-mono text-xs text-zinc-400 max-w-sm mx-auto">
                 Try widening your budget filter or switching to another metro area.

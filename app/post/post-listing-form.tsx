@@ -313,7 +313,7 @@ export default function PostListingForm() {
                         : "border-zinc-800 bg-[#18181f] text-zinc-400 hover:border-zinc-600 hover:text-white")
                     }
                   >
-                    {selected ? "✓ " : "+ "}
+                    {selected ? " " : "+ "}
                     {item}
                   </button>
                 );

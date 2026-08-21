@@ -21,11 +21,11 @@ import {
 } from "lucide-react";
 
 const bentoVibes = [
-  { tag: "TECH_&_STARTUPS", city: "Bangalore", count: "340+ FLATS", accent: "lime", emoji: "⚡" },
-  { tag: "CREATIVE_LOFTS", city: "Mumbai", count: "190+ FLATS", accent: "orange", emoji: "🌊" },
-  { tag: "STUDIO_SANCTUARY", city: "Delhi", count: "120+ FLATS", accent: "blue", emoji: "🎨" },
-  { tag: "SMART_HOMES", city: "Hyderabad", count: "210+ FLATS", accent: "purple", emoji: "🎮" },
-  { tag: "SERENE_GREENS", city: "Pune", count: "140+ FLATS", accent: "lime", emoji: "🌿" }
+  { tag: "TECH_&_STARTUPS", city: "Bangalore", count: "340+ FLATS", accent: "lime", icon: Zap },
+  { tag: "CREATIVE_LOFTS", city: "Mumbai", count: "190+ FLATS", accent: "orange", icon: Activity },
+  { tag: "STUDIO_SANCTUARY", city: "Delhi", count: "120+ FLATS", accent: "blue", icon: Building2 },
+  { tag: "SMART_HOMES", city: "Hyderabad", count: "210+ FLATS", accent: "purple", icon: Terminal },
+  { tag: "SERENE_GREENS", city: "Pune", count: "140+ FLATS", accent: "lime", icon: ShieldCheck }
 ];
 
 const howItWorks = [
@@ -203,9 +203,11 @@ export default function HomePage() {
             <Link
               key={v.tag}
               href={`/browse?city=${encodeURIComponent(v.city)}`}
-              className="bento-card-interactive p-4 border-1.5 border-zinc-800 block"
+              className="bento-card-interactive p-4 border-1.5 border-zinc-800 block space-y-2"
             >
-              <div className="text-2xl mb-2">{v.emoji}</div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 text-[#ccff00]">
+                <v.icon className="h-4 w-4" />
+              </div>
               <h3 className="font-mono text-xs font-bold text-white uppercase">{v.tag}</h3>
               <p className="font-mono text-[11px] text-zinc-500 mt-0.5">{v.city}</p>
               <span className="mt-3 inline-block font-mono text-[10px] text-[#ccff00] font-bold">

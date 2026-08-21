@@ -84,7 +84,9 @@ export default async function SavedListingsPage() {
       {/* Grid or Empty State */}
       {validListings.length === 0 ? (
         <div className="bento-card p-12 text-center space-y-4 max-w-lg mx-auto border-1.5 border-zinc-800">
-          <p className="text-4xl">📑</p>
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-900 text-zinc-500 border border-zinc-800">
+            <Bookmark className="h-6 w-6" />
+          </div>
           <h3 className="text-xl font-black uppercase text-white">No Bookmarks Recorded</h3>
           <p className="text-zinc-400 max-w-sm mx-auto">
             Browse through our verified living directory and bookmark listings to save them to this board.
