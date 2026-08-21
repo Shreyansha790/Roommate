@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Zap } from "lucide-react";
 
 export type CompatibilityBadgeProps = {
   score: number;
@@ -9,22 +10,31 @@ export function CompatibilityBadge({ score }: CompatibilityBadgeProps) {
     return (
       <Link
         href="/onboarding"
-        className="inline-flex h-6 items-center rounded-full border border-slate-300 bg-slate-50 px-2.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-100"
+        className="inline-flex items-center gap-1 rounded-md border-1.5 border-[#ccff00] bg-[#ccff00]/10 px-2 py-0.5 font-mono text-[10px] font-bold text-[#ccff00] transition hover:bg-[#ccff00] hover:text-black"
       >
-        Set preferences →
+        <Zap className="h-3 w-3 fill-current" />
+        <span>VIBE_DNA: SET</span>
       </Link>
     );
   }
 
-  const tone = score >= 75
-    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-    : score >= 50
-      ? "border-amber-200 bg-amber-50 text-amber-700"
-      : "border-slate-300 bg-slate-100 text-slate-700";
+  const isHigh = score >= 80;
+  const isMed = score >= 60;
+
+  const styleClass = isHigh
+    ? "border-1.5 border-[#ccff00] bg-[#ccff00] text-black font-extrabold shadow-[2px_2px_0px_#000]"
+    : isMed
+      ? "border-1.5 border-[#3b82f6] bg-[#3b82f6]/20 text-[#3b82f6] font-bold"
+      : "border-1.5 border-[#ff5500] bg-[#ff5500]/20 text-[#ff5500] font-bold";
 
   return (
-    <span className={`inline-flex h-6 items-center rounded-full border px-2.5 text-xs font-semibold ${tone}`}>
-      {score}% match
+    <span
+      className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${styleClass}`}
+    >
+      <span className={`inline-block h-1.5 w-1.5 rounded-full ${isHigh ? 'bg-black' : isMed ? 'bg-[#3b82f6]' : 'bg-[#ff5500]'}`} />
+      <span>{score}%_MATCH</span>
     </span>
   );
 }
+
+
