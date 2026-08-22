@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient, hasSupabaseEnv } from "@/lib/supabase";
-import { Lock, Mail, Shield } from "lucide-react";
+import { Lock, Mail, Sparkles } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -59,47 +59,47 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-140px)] max-w-md items-center px-4 py-12 sm:px-6 font-mono text-xs">
-      <div className="bento-card reticle-border w-full p-8 space-y-6">
-        <div className="space-y-3 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-phosphor/10 border border-phosphor/30 text-phosphor">
-            <Shield className="h-7 w-7" />
+    <main className="mx-auto flex min-h-[calc(100vh-140px)] max-w-md items-center px-4 py-12 sm:px-6 font-sans text-stone-800">
+      <div className="bento-card w-full p-8 space-y-6 shadow-warm-lg">
+        <div className="space-y-2 text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-coral-100 text-coral-600 font-bold shadow-sm">
+            <Sparkles className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-black uppercase text-white tracking-tight">ACCESS_TERMINAL</h1>
-          <p className="text-steel-muted text-[11px]">Authenticate to access your flatmate matches and saved telemetry</p>
+          <h1 className="text-2xl font-black text-stone-900 tracking-tight">Welcome Back</h1>
+          <p className="text-stone-500 text-xs">Sign in to access your flatmate matches and saved spaces</p>
         </div>
 
         {errorMessage ? (
-          <div className="rounded-lg border border-crimson/30 bg-crimson/10 p-3 text-crimson font-mono text-xs">
-            [AUTH_ERROR] {errorMessage}
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-rose-700 text-xs">
+            {errorMessage}
           </div>
         ) : null}
 
         <form className="space-y-4" onSubmit={onLogin}>
-          <div>
-            <label className="text-steel-muted font-bold uppercase block mb-1.5">EMAIL_ADDRESS</label>
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-stone-700 block">Email Address</label>
             <div className="relative">
-              <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-steel-muted" />
+              <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-stone-400" />
               <input
                 name="email"
                 type="email"
                 placeholder="name@example.com"
                 required
-                className="w-full neo-input pl-10 p-3"
+                className="w-full neo-input pl-10 p-3 text-xs"
               />
             </div>
           </div>
 
-          <div>
-            <label className="text-steel-muted font-bold uppercase block mb-1.5">PASSWORD</label>
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-stone-700 block">Password</label>
             <div className="relative">
-              <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-steel-muted" />
+              <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-stone-400" />
               <input
                 name="password"
                 type="password"
-                placeholder="Enter secure passphrase"
+                placeholder="Enter password"
                 required
-                className="w-full neo-input pl-10 p-3"
+                className="w-full neo-input pl-10 p-3 text-xs"
               />
             </div>
           </div>
@@ -107,33 +107,33 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="neo-button w-full py-3.5 font-black uppercase tracking-wider text-xs"
+            className="neo-button w-full py-3.5 font-bold text-sm tracking-wide"
           >
-            {loading ? "AUTHENTICATING..." : "SIGN_IN_TO_NETWORK"}
+            {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-tungsten-border" />
+            <div className="w-full border-t border-stone-200" />
           </div>
-          <div className="relative flex justify-center text-[10px] uppercase">
-            <span className="bg-tungsten px-3 text-steel-muted font-bold">OR_AUTHENTICATE_VIA</span>
+          <div className="relative flex justify-center text-xs">
+            <span className="bg-white px-3 text-stone-400 font-medium">Or continue with</span>
           </div>
         </div>
 
         <button
           type="button"
           onClick={onGoogle}
-          className="neo-button-secondary flex w-full items-center justify-center gap-2 py-3 font-bold text-xs"
+          className="neo-button-secondary flex w-full items-center justify-center gap-2 py-3 font-semibold text-xs"
         >
-          <span>CONTINUE_WITH_GOOGLE</span>
+          <span>Continue with Google</span>
         </button>
 
-        <p className="text-center text-steel-muted">
-          NO_ACCOUNT?{" "}
-          <Link href="/signup" className="font-bold text-phosphor hover:underline">
-            [ CREATE_ACCOUNT ]
+        <p className="text-center text-xs text-stone-500">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="font-bold text-coral-600 hover:underline">
+            Sign up
           </Link>
         </p>
       </div>

@@ -1,532 +1,294 @@
 import Link from "next/link";
 import Image from "next/image";
-import { CompatibilityBadge } from "@/components/CompatibilityBadge";
-import { TacticalBadge } from "@/components/HUD/TacticalBadge";
-import { RadarCanvas } from "@/components/HUD/RadarCanvas";
+import { createClient } from "@/lib/supabase-server";
 import { DEMO_LISTINGS } from "@/lib/demo-data";
+import { CompatibilityBadge } from "@/components/CompatibilityBadge";
 import {
-  Zap,
   Search,
   MapPin,
-  Flame,
-  ShieldCheck,
-  SlidersHorizontal,
-  ArrowRight,
   Sparkles,
-  Users,
-  Building2,
-  Terminal,
-  Activity,
-  CheckCircle2,
-  Lock,
-  Compass,
-  Cpu,
-  Radar,
-  Radio
+  ShieldCheck,
+  ArrowRight,
+  Home
 } from "lucide-react";
 
-const CURATED_ZONES = [
-  {
-    tag: "BANGALORE_TECH_CORRIDOR",
-    city: "Bangalore",
-    locality: "Indiranagar / Koramangala",
-    count: "340+ SPACES",
-    vibe: "Tech Founders & Remote Engineers",
-    accent: "text-[#ccff00]",
-    icon: Zap
-  },
-  {
-    tag: "MUMBAI_CREATIVE_LOFTS",
-    city: "Mumbai",
-    locality: "Bandra West / Juhu",
-    count: "190+ SPACES",
-    vibe: "Designers & Media Creatives",
-    accent: "text-[#ff5500]",
-    icon: Activity
-  },
-  {
-    tag: "DELHI_STUDIO_SANCTUARY",
-    city: "Delhi",
-    locality: "Hauz Khas / Saket",
-    count: "120+ SPACES",
-    vibe: "Artists, Writers & Analysts",
-    accent: "text-[#3b82f6]",
-    icon: Building2
-  },
-  {
-    tag: "HYDERABAD_SMART_TOWNSHIP",
-    city: "Hyderabad",
-    locality: "Hitec City / Gachibowli",
-    count: "210+ SPACES",
-    vibe: "AI Engineers & Bio-Techies",
-    accent: "text-[#a855f7]",
-    icon: Terminal
-  },
-  {
-    tag: "PUNE_SERENE_GREENS",
-    city: "Pune",
-    locality: "Koregaon Park / Viman Nagar",
-    count: "140+ SPACES",
-    vibe: "Product Teams & Researchers",
-    accent: "text-[#ccff00]",
-    icon: ShieldCheck
+export default async function HomePage() {
+  const supabase = await createClient();
+  let listings: any[] = DEMO_LISTINGS;
+
+  try {
+    const { data } = await supabase
+      .from("listings")
+      .select("id,title,locality,city,rent,deposit,room_type,available_from,photos,amenities,tags,user_id,profiles!listings_user_id_fkey(id,full_name,avatar_url,bio,is_verified,profession)")
+      .limit(6);
+    if (data && data.length > 0) {
+      listings = data;
+    }
+  } catch (err) {
+    listings = DEMO_LISTINGS;
   }
-];
 
-const PROTOCOL_STEPS = [
-  {
-    step: "STEP_01",
-    title: "CALIBRATE VIBE DNA",
-    description: "60-second lifestyle calibration covering sleep rhythm, cleanliness quotient, food synergy, and social energy frequency.",
-    badge: "NO_FRICTION",
-    icon: Sparkles
-  },
-  {
-    step: "STEP_02",
-    title: "ALGORITHMIC RADAR MATCH",
-    description: "Multi-vector spatial matrix scans verified profiles to compute exact harmonic compatibility ratings with zero guesswork.",
-    badge: "98.4%_ACCURACY",
-    icon: CrosshairIcon
-  },
-  {
-    step: "STEP_03",
-    title: "DIRECT MOVE-IN PROTOCOL",
-    description: "Coordinate viewings and generate cryptographic co-habitation agreements directly with verified hosts. Zero broker fees.",
-    badge: "ZERO_BROKERAGE",
-    icon: ShieldCheck
-  }
-];
-
-function CrosshairIcon(props: React.ComponentProps<typeof Compass>) {
-  return <Compass {...props} />;
-}
-
-export default function HomePage() {
-  const featuredListings = DEMO_LISTINGS.slice(0, 3);
+  const curatedZones = [
+    { city: "Bangalore", area: "Indiranagar & HSR", tag: "Tech & Cafes", image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80", count: "340+ Rooms" },
+    { city: "Mumbai", area: "Bandra & Juhu", tag: "Creative Lofts", image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80", count: "190+ Rooms" },
+    { city: "Delhi NCR", area: "Hauz Khas & Gurgaon", tag: "Studio Sanctuaries", image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80", count: "120+ Rooms" },
+    { city: "Hyderabad", area: "Hitec & Gachibowli", tag: "Modern Highrises", image: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=600&q=80", count: "210+ Rooms" }
+  ];
 
   return (
-    <main className="min-h-screen pb-16 bg-obsidian text-slate-100 font-mono selection:bg-phosphor selection:text-black">
-      {/* Top Telemetry Notification Ribbon */}
-      <div className="border-b border-tungsten-border/80 bg-tungsten-panel/80 px-4 py-2 text-[11px] backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Radio className="h-3.5 w-3.5 text-phosphor animate-pulse" />
-            <span className="font-bold text-white">SYSTEM_STATUS: ALL_RADAR_CLUSTERS_ONLINE</span>
-            <span className="hidden sm:inline text-slate-500">•</span>
-            <span className="hidden sm:inline text-slate-400">LATENCY: 14MS</span>
-          </div>
-          <div className="flex items-center gap-3 text-slate-400">
-            <span className="text-phosphor font-bold">100% DIRECT HOSTS</span>
-            <span>ZERO_BROKERAGE_GUARANTEE</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section with Interactive Radar Canvas */}
-      <section className="mx-auto max-w-7xl px-4 pt-8 pb-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 items-stretch">
-          {/* Main Hero Cockpit Panel */}
-          <div className="chamfer-card border border-tungsten-border bg-obsidian-sub p-6 sm:p-10 lg:col-span-7 flex flex-col justify-between relative overflow-hidden shadow-2xl reticle-border">
-            <div className="space-y-6">
-              <div className="flex flex-wrap items-center gap-2">
-                <TacticalBadge variant="emerald" size="sm" pulse>
-                  SYSTEM_V2.0 // ACTIVE
-                </TacticalBadge>
-                <TacticalBadge variant="cyan" size="sm">
-                  SPATIAL_RADAR
-                </TacticalBadge>
-                <TacticalBadge variant="amber" size="sm">
-                  ZERO_BROKERAGE
-                </TacticalBadge>
-              </div>
-
-              <h1 className="text-3xl font-black uppercase tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.05]">
-                STOP LIVING WITH <span className="text-slate-600 line-through decoration-rose-500 decoration-2">STRANGERS</span>.<br />
-                FIND FLATMATES WHO MATCH YOUR{" "}
-                <span className="bg-phosphor text-black px-2.5 py-0.5 inline-block -rotate-1 font-mono shadow-glow-phosphor">
-                  FREQUENCY
-                </span>
-                .
-              </h1>
-
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
-                The high-precision roommate discovery engine. Verified profiles, multi-vector lifestyle DNA telemetry, and direct human-to-human connections across India&apos;s leading tech clusters.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                <Link
-                  href="/browse"
-                  className="chamfer-card-sm flex items-center gap-1.5 px-4 py-2 text-xs font-black uppercase bg-phosphor text-black hover:bg-phosphor-glow shadow-glow-phosphor transition"
-                >
-                  <Search className="h-3.5 w-3.5" />
-                  <span>EXPLORE_SPACES</span>
-                </Link>
-                <Link
-                  href="/onboarding"
-                  className="chamfer-card-sm flex items-center gap-1.5 px-4 py-2 text-xs font-bold uppercase border border-tungsten-border bg-tungsten text-slate-200 hover:border-violet hover:text-violet transition"
-                >
-                  <Sparkles className="h-3.5 w-3.5 text-violet-400" />
-                  <span>[ CALIBRATE_VIBE_DNA ]</span>
-                </Link>
-              </div>
+    <div className="space-y-16 pb-20 font-sans text-stone-800">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#fefbf6] via-[#faf9f6] to-white pt-12 pb-20 border-b border-stone-200/60">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-coral-200 bg-coral-50/80 px-4 py-1.5 text-xs font-semibold text-coral-700 shadow-sm">
+              <Sparkles className="h-3.5 w-3.5 text-coral-500" />
+              <span>Multi-Vector Vibe Matching • 100% Zero Brokerage</span>
             </div>
 
-            {/* Quick Search Telemetry Console */}
-            <div className="mt-8 rounded-xl border border-tungsten-border bg-tungsten/90 p-4 shadow-lg">
-              <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-3 border-b border-tungsten-border/60 pb-2">
-                <span className="flex items-center gap-1.5 text-phosphor">
-                  <Terminal className="h-3.5 w-3.5" />
-                  <span>QUICK_MATCH_TELEMETRY_CONSOLE</span>
-                </span>
-                <span className="text-slate-500">PARAM_SEARCH_V2</span>
-              </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-stone-900 leading-[1.15]">
+              Find a home & roommates you&apos;ll <span className="text-coral-500 underline decoration-coral-200 underline-offset-8">genuinely love</span> living with.
+            </h1>
 
-              <form action="/browse" method="GET" className="grid grid-cols-1 gap-3 sm:grid-cols-4 items-center">
-                <div className="flex items-center gap-2 rounded-lg bg-obsidian px-3 py-2.5 border border-tungsten-border">
-                  <MapPin className="h-4 w-4 text-cyan-400 shrink-0" />
-                  <select
-                    name="city"
-                    defaultValue=""
-                    className="w-full bg-transparent text-xs text-slate-100 focus:outline-none cursor-pointer"
-                  >
-                    <option value="" className="bg-tungsten text-slate-200">METRO: ALL</option>
-                    <option value="Bangalore" className="bg-tungsten text-slate-200">Bangalore</option>
-                    <option value="Mumbai" className="bg-tungsten text-slate-200">Mumbai</option>
-                    <option value="Delhi" className="bg-tungsten text-slate-200">Delhi & NCR</option>
-                    <option value="Hyderabad" className="bg-tungsten text-slate-200">Hyderabad</option>
-                    <option value="Pune" className="bg-tungsten text-slate-200">Pune</option>
-                    <option value="Gurgaon" className="bg-tungsten text-slate-200">Gurgaon</option>
-                  </select>
-                </div>
+            <p className="text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
+              Match on sleep rhythms, cleanliness, diet, and shared hobbies. Connect directly with verified flatmates with zero broker interference.
+            </p>
 
-                <div className="flex items-center gap-2 rounded-lg bg-obsidian px-3 py-2.5 border border-tungsten-border">
-                  <SlidersHorizontal className="h-4 w-4 text-solar shrink-0" />
-                  <select
-                    name="roomType"
-                    defaultValue=""
-                    className="w-full bg-transparent text-xs text-slate-100 focus:outline-none cursor-pointer"
-                  >
-                    <option value="" className="bg-tungsten text-slate-200">TYPE: ANY</option>
-                    <option value="single" className="bg-tungsten text-slate-200">Single Room</option>
-                    <option value="shared" className="bg-tungsten text-slate-200">Shared Room</option>
-                    <option value="entire_flat" className="bg-tungsten text-slate-200">Entire Flat</option>
-                  </select>
-                </div>
-
-                <div className="flex items-center gap-2 rounded-lg bg-obsidian px-3 py-2.5 border border-tungsten-border">
-                  <span className="text-xs font-bold text-slate-500">MAX_₹</span>
+            {/* Quick Search Console */}
+            <div className="pt-4 max-w-3xl mx-auto">
+              <form action="/browse" method="GET" className="bento-card p-3 shadow-warm-lg border border-stone-200 bg-white grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div className="flex items-center gap-2.5 px-3 py-2 border-b sm:border-b-0 sm:border-r border-stone-100">
+                  <MapPin className="h-4 w-4 text-coral-500 shrink-0" />
                   <input
-                    type="number"
-                    name="maxRent"
-                    placeholder="25000"
-                    className="w-full bg-transparent text-xs text-slate-100 placeholder:text-slate-600 focus:outline-none"
+                    name="city"
+                    placeholder="Which city or area?"
+                    className="w-full bg-transparent text-xs font-medium text-stone-800 placeholder-stone-400 focus:outline-none"
                   />
+                </div>
+
+                <div className="flex items-center gap-2.5 px-3 py-2 border-b sm:border-b-0 sm:border-r border-stone-100">
+                  <Home className="h-4 w-4 text-amber-500 shrink-0" />
+                  <select name="type" className="w-full bg-transparent text-xs font-medium text-stone-800 focus:outline-none cursor-pointer">
+                    <option value="">Any Room Type</option>
+                    <option value="single">Private Room</option>
+                    <option value="shared">Shared Room</option>
+                    <option value="entire_flat">Full Apartment</option>
+                  </select>
                 </div>
 
                 <button
                   type="submit"
-                  className="chamfer-card-sm flex items-center justify-center gap-2 py-2.5 px-4 text-xs font-black uppercase tracking-wider bg-phosphor text-black hover:bg-phosphor-glow shadow-glow-phosphor transition cursor-pointer"
+                  className="neo-button py-2.5 px-4 flex items-center justify-center gap-2 text-xs font-bold shadow-warm-coral"
                 >
                   <Search className="h-4 w-4" />
-                  <span>EXECUTE_SEARCH</span>
+                  <span>Search Spaces</span>
                 </button>
               </form>
             </div>
-          </div>
 
-          {/* Right Hero Radar Visualizer */}
-          <div className="lg:col-span-5 flex flex-col">
-            <RadarCanvas height={360} className="h-full flex-1" />
+            {/* Popular Metros Row */}
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-xs text-stone-500">
+              <span className="font-medium text-stone-400">Popular:</span>
+              {["Indiranagar, BLR", "Koramangala, BLR", "Bandra West, BOM", "Hauz Khas, DEL", "Hitec City, HYD"].map((loc) => (
+                <Link
+                  key={loc}
+                  href={`/browse?q=${encodeURIComponent(loc)}`}
+                  className="rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 px-3 py-1 transition font-medium"
+                >
+                  {loc}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Live System Metrics Stream Ribbon */}
-      <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <div className="chamfer-card-sm border border-tungsten-border bg-tungsten-panel p-4 flex items-center justify-between">
-            <div>
-              <p className="text-2xl sm:text-3xl font-black text-phosphor">48.5K+</p>
-              <p className="text-[10px] text-slate-400 uppercase font-bold mt-0.5">ACTIVE_SEEKERS</p>
-            </div>
-            <Users className="h-6 w-6 text-slate-600" />
-          </div>
-
-          <div className="chamfer-card-sm border border-tungsten-border bg-tungsten-panel p-4 flex items-center justify-between">
-            <div>
-              <p className="text-2xl sm:text-3xl font-black text-cyan-400">12.4K+</p>
-              <p className="text-[10px] text-slate-400 uppercase font-bold mt-0.5">VERIFIED_SPACES</p>
-            </div>
-            <Building2 className="h-6 w-6 text-slate-600" />
-          </div>
-
-          <div className="chamfer-card-sm border border-tungsten-border bg-tungsten-panel p-4 flex items-center justify-between">
-            <div>
-              <p className="text-2xl sm:text-3xl font-black text-amber-400">98.4%</p>
-              <p className="text-[10px] text-slate-400 uppercase font-bold mt-0.5">MATCH_SUCCESS_RATE</p>
-            </div>
-            <Sparkles className="h-6 w-6 text-slate-600" />
-          </div>
-
-          <div className="chamfer-card-sm border border-tungsten-border bg-tungsten-panel p-4 flex items-center justify-between">
-            <div>
-              <p className="text-2xl sm:text-3xl font-black text-white">99.98%</p>
-              <p className="text-[10px] text-slate-400 uppercase font-bold mt-0.5">SYSTEM_UPTIME</p>
-            </div>
-            <Activity className="h-6 w-6 text-slate-600" />
-          </div>
-        </div>
-      </section>
-
-      {/* Curated Spatial Zones (5 Metro Tech Clusters) */}
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2 border-b border-tungsten-border pb-4">
+      {/* Curated Neighborhood Zones */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-2">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-phosphor">// SPATIAL_ZONES</span>
-              <TacticalBadge variant="emerald" size="xs">5 METRO CLUSTERS</TacticalBadge>
-            </div>
-            <h2 className="text-2xl font-black uppercase text-white tracking-tight mt-1">
-              Explore by Community Frequency
-            </h2>
+            <span className="text-xs font-bold text-coral-600 uppercase tracking-wider">Neighborhood Guide</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">Explore by Community Vibe</h2>
           </div>
-          <Link
-            href="/browse"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
-          >
-            <span>VIEW_ALL_ZONES</span>
+          <Link href="/browse" className="text-xs font-bold text-coral-600 hover:text-coral-700 inline-flex items-center gap-1">
+            <span>View all neighborhoods</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {CURATED_ZONES.map((zone) => {
-            const Icon = zone.icon;
-            return (
-              <Link
-                key={zone.tag}
-                href={`/browse?city=${encodeURIComponent(zone.city)}`}
-                className="chamfer-card-sm border border-tungsten-border bg-tungsten-panel p-4 hover:border-phosphor hover:bg-tungsten-card transition duration-150 block space-y-3 group"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex h-8 w-8 items-center justify-center rounded bg-obsidian border border-tungsten-border text-phosphor group-hover:border-phosphor">
-                    <Icon className="h-4 w-4" />
-                  </div>
-                  <span className="text-[10px] font-bold text-phosphor">
-                    {zone.count}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {curatedZones.map((zone) => (
+            <Link
+              key={zone.area}
+              href={`/browse?city=${encodeURIComponent(zone.city)}`}
+              className="bento-card-interactive group overflow-hidden p-0 block"
+            >
+              <div className="relative h-44 w-full overflow-hidden bg-stone-100">
+                <Image
+                  src={zone.image}
+                  alt={zone.area}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover transition duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3 text-white">
+                  <span className="text-[11px] font-semibold bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-full">
+                    {zone.tag}
                   </span>
+                  <h3 className="font-bold text-base mt-1">{zone.area}</h3>
+                  <p className="text-xs text-stone-200">{zone.count}</p>
                 </div>
-
-                <div>
-                  <h3 className="text-xs font-black text-white group-hover:text-phosphor uppercase">
-                    {zone.city}
-                  </h3>
-                  <p className="text-[11px] text-cyan-400 mt-0.5">{zone.locality}</p>
-                  <p className="text-[10px] text-slate-400 mt-1 line-clamp-1">{zone.vibe}</p>
-                </div>
-
-                <div className="pt-2 border-t border-tungsten-border/60 flex items-center justify-between text-[10px] text-slate-500 group-hover:text-slate-300">
-                  <span>ENTER_ZONE</span>
-                  <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition" />
-                </div>
-              </Link>
-            );
-          })}
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* Featured Spaces Feed */}
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2 border-b border-tungsten-border pb-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-phosphor">// VERIFIED_FEED</span>
-              <TacticalBadge variant="cyan" size="xs">DIRECT_HOSTS</TacticalBadge>
-            </div>
-            <h2 className="text-2xl font-black uppercase text-white tracking-tight mt-1">
-              High-Frequency Verified Spaces
-            </h2>
+      {/* How It Works */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-[#f8f7f4] border border-stone-200 p-8 sm:p-12 space-y-8">
+          <div className="text-center max-w-xl mx-auto space-y-2">
+            <span className="text-xs font-bold text-coral-600 uppercase tracking-wider">The Harmony Protocol</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">How RoommateSphere Works</h2>
+            <p className="text-sm text-stone-600">3 simple steps to find your ideal home and compatible flatmates.</p>
           </div>
-          <Link
-            href="/browse"
-            className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
-          >
-            <span>EXPLORE_ALL_LISTINGS</span>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-2xl p-6 border border-stone-200/80 shadow-sm space-y-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-coral-100 text-coral-600 font-bold">
+                1
+              </div>
+              <h3 className="font-bold text-base text-stone-900">Calibrate Your Vibe DNA</h3>
+              <p className="text-xs text-stone-600 leading-relaxed">
+                Take a 60-second questionnaire on sleep schedules, cleanliness habits, diet preferences, and social battery.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-stone-200/80 shadow-sm space-y-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-700 font-bold">
+                2
+              </div>
+              <h3 className="font-bold text-base text-stone-900">Multi-Vector Compatibility</h3>
+              <p className="text-xs text-stone-600 leading-relaxed">
+                Our algorithm scores mutual compatibility across lifestyle habits so you never encounter awkward flatmate surprises.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 border border-stone-200/80 shadow-sm space-y-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 font-bold">
+                3
+              </div>
+              <h3 className="font-bold text-base text-stone-900">Direct Chat & Zero Brokerage</h3>
+              <p className="text-xs text-stone-600 leading-relaxed">
+                Message verified hosts directly, schedule visits, and generate a customized flatmate agreement in one click.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Verified Listings */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-2">
+          <div>
+            <span className="text-xs font-bold text-coral-600 uppercase tracking-wider">Verified Homes</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">Trending Spaces This Week</h2>
+          </div>
+          <Link href="/browse" className="text-xs font-bold text-coral-600 hover:text-coral-700 inline-flex items-center gap-1">
+            <span>Explore all {listings.length}+ spaces</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredListings.map((listing, idx) => (
-            <article
-              key={listing.id}
-              className="chamfer-card border border-tungsten-border bg-tungsten-panel p-0 overflow-hidden hover:border-phosphor transition duration-200 flex flex-col justify-between group"
-            >
-              {/* Media Block */}
-              <div className="relative h-56 w-full overflow-hidden bg-black">
-                <Image
-                  src={listing.photos[0]}
-                  alt={listing.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition duration-300 group-hover:scale-105"
-                />
-                <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                  <TacticalBadge variant="cyan" size="xs">
-                    {listing.room_type.toUpperCase()}
-                  </TacticalBadge>
-                </div>
-                <div className="absolute top-3 right-3">
-                  <CompatibilityBadge score={idx === 0 ? 96 : idx === 1 ? 91 : 84} />
-                </div>
-                <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
-                  <div className="chamfer-card-sm bg-obsidian/90 px-3 py-1 border border-tungsten-border backdrop-blur-md">
-                    <span className="text-base font-black text-phosphor">₹{listing.rent.toLocaleString()}</span>
-                    <span className="text-[10px] text-slate-400">/mo</span>
-                  </div>
-                  <div className="chamfer-card-sm bg-obsidian/90 px-2 py-1 border border-tungsten-border text-[10px] text-slate-300 backdrop-blur-md">
-                    0% BROKERAGE
-                  </div>
-                </div>
-              </div>
+          {listings.slice(0, 6).map((listing: any, idx: number) => {
+            const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
+            const photo = listing.photos?.[0] || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80";
 
-              {/* Card Body */}
-              <div className="p-5 space-y-4">
-                <div>
-                  <h3 className="line-clamp-1 text-sm font-black uppercase text-white group-hover:text-phosphor transition">
-                    {listing.title}
-                  </h3>
-                  <p className="mt-1 flex items-center gap-1 text-xs text-slate-400">
-                    <MapPin className="h-3.5 w-3.5 text-cyan-400" />
-                    <span>{listing.locality}, {listing.city}</span>
-                  </p>
-                </div>
-
-                {/* Host DNA Strip */}
-                <div className="flex items-center gap-3 rounded-lg border border-tungsten-border bg-obsidian p-2.5">
-                  {listing.profiles.avatar_url ? (
-                    <Image
-                      src={listing.profiles.avatar_url}
-                      alt={listing.profiles.full_name}
-                      width={32}
-                      height={32}
-                      className="h-8 w-8 rounded object-cover border border-tungsten-border"
-                    />
-                  ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded bg-phosphor text-black font-black text-xs">
-                      {listing.profiles.full_name[0]}
+            return (
+              <article
+                key={listing.id}
+                className="bento-card-interactive group overflow-hidden p-0 flex flex-col justify-between"
+              >
+                <div className="relative h-56 w-full overflow-hidden bg-stone-100">
+                  <Image
+                    src={photo}
+                    alt={listing.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                    <span className="bg-white/90 backdrop-blur-md text-stone-800 font-bold text-[11px] px-2.5 py-1 rounded-full shadow-sm">
+                      {listing.room_type?.replace("_", " ").toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <CompatibilityBadge score={idx === 0 ? 94 : idx === 1 ? 88 : 82} />
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                    <div className="rounded-xl bg-white/95 backdrop-blur-md px-3 py-1.5 shadow-sm border border-stone-200">
+                      <span className="font-extrabold text-base text-stone-900">&#8377;{Number(listing.rent).toLocaleString()}</span>
+                      <span className="text-xs text-stone-500 font-medium">/month</span>
                     </div>
-                  )}
-                  <div className="overflow-hidden flex-1">
-                    <div className="flex items-center gap-1.5">
-                      <p className="truncate text-xs font-bold text-white">{listing.profiles.full_name}</p>
-                      {listing.profiles.is_verified && (
-                        <ShieldCheck className="h-3.5 w-3.5 text-phosphor" />
+                  </div>
+                </div>
+
+                <div className="p-5 space-y-3">
+                  <div>
+                    <Link href={`/listings/${listing.id}`} className="hover:text-coral-600 transition">
+                      <h3 className="line-clamp-1 text-base font-bold text-stone-900">
+                        {listing.title}
+                      </h3>
+                    </Link>
+                    <p className="mt-1 flex items-center gap-1 text-xs text-stone-500 font-medium">
+                      <MapPin className="h-3.5 w-3.5 text-coral-500 shrink-0" />
+                      <span>{listing.locality}, {listing.city}</span>
+                    </p>
+                  </div>
+
+                  {profile && (
+                    <div className="flex items-center gap-3 rounded-xl border border-stone-100 bg-[#faf9f6] p-2.5">
+                      {profile.avatar_url ? (
+                        <Image
+                          src={profile.avatar_url}
+                          alt={profile.full_name || "Host"}
+                          width={28}
+                          height={28}
+                          className="h-7 w-7 rounded-full object-cover border border-stone-200"
+                        />
+                      ) : (
+                        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-coral-100 text-xs font-bold text-coral-600">
+                          {profile.full_name?.[0] || "H"}
+                        </div>
+                      )}
+                      <div className="overflow-hidden flex-1">
+                        <p className="truncate text-xs font-bold text-stone-800">{profile.full_name}</p>
+                        <p className="truncate text-[11px] text-stone-500">{profile.profession || "Verified Resident"}</p>
+                      </div>
+                      {profile.is_verified && (
+                        <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
                       )}
                     </div>
-                    <p className="truncate text-[10px] text-slate-400">{listing.profiles.profession || "VERIFIED_HOST"}</p>
+                  )}
+
+                  <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                    <span>Move in: {listing.available_from || "Immediate"}</span>
+                    <Link
+                      href={`/listings/${listing.id}`}
+                      className="font-bold text-coral-600 hover:text-coral-700 inline-flex items-center gap-1"
+                    >
+                      <span>View Details</span>
+                      <ArrowRight className="h-3 w-3" />
+                    </Link>
                   </div>
                 </div>
-
-                {/* Vibe Tags */}
-                {listing.tags && (
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {listing.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded border border-tungsten-border bg-tungsten px-2 py-0.5 text-[10px] text-slate-300"
-                      >
-                        #{t.replace(" ", "_")}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <div className="pt-3 border-t border-tungsten-border flex items-center justify-between text-xs">
-                  <span className="text-slate-500">AVAIL: {listing.available_from}</span>
-                  <Link
-                    href={`/listings/${listing.id}`}
-                    className="font-bold text-phosphor hover:underline inline-flex items-center gap-1"
-                  >
-                    <span>[ VIEW_DOSSIER ]</span>
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </section>
-
-      {/* 3-Step Protocol Architecture */}
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="chamfer-card p-8 sm:p-12 border border-tungsten-border bg-obsidian-sub shadow-xl">
-          <div className="max-w-xl mb-10">
-            <TacticalBadge variant="emerald" size="sm">
-              PROTOCOL_SPECIFICATION
-            </TacticalBadge>
-            <h2 className="mt-3 text-3xl font-black uppercase text-white tracking-tight">
-              How Roommate Sphere Operates
-            </h2>
-            <p className="mt-1 text-xs text-slate-400">
-              Zero brokers. Zero sketchy listings. 100% lifestyle telemetry and algorithmic harmony.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {PROTOCOL_STEPS.map((item) => {
-              const StepIcon = item.icon;
-              return (
-                <div
-                  key={item.step}
-                  className="chamfer-card-sm border border-tungsten-border bg-tungsten-panel p-6 space-y-4 hover:border-phosphor transition"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-black text-phosphor">{item.step}</span>
-                    <TacticalBadge variant="cyan" size="xs">
-                      {item.badge}
-                    </TacticalBadge>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <StepIcon className="h-4 w-4 text-phosphor" />
-                    <h3 className="text-sm font-black uppercase text-white">{item.title}</h3>
-                  </div>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom Conversion Box */}
-      <section className="mx-auto max-w-5xl px-4 pt-6 text-center">
-        <div className="chamfer-card p-10 border border-phosphor bg-obsidian-card shadow-glow-phosphor space-y-4">
-          <TacticalBadge variant="emerald" size="sm" pulse>
-            LIVING_HARMONY_READY
-          </TacticalBadge>
-          <h2 className="text-3xl sm:text-4xl font-black uppercase text-white tracking-tight">
-            Ready to find your harmonious living frequency?
-          </h2>
-          <p className="max-w-lg mx-auto text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Join thousands of verified techies, designers, founders, and students discovering high-vibe spaces every single day.
-          </p>
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/signup"
-              className="chamfer-card-sm bg-phosphor text-black font-black uppercase px-8 py-3 text-xs tracking-wider hover:bg-phosphor-glow shadow-glow-phosphor transition"
-            >
-              CREATE_ACCOUNT_NOW
-            </Link>
-            <Link
-              href="/browse"
-              className="chamfer-card-sm border border-tungsten-border bg-tungsten text-slate-200 font-bold uppercase px-6 py-3 text-xs hover:border-cyan hover:text-cyan transition"
-            >
-              BROWSE_LISTINGS_DIRECTLY
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
+    </div>
   );
 }

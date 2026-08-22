@@ -10,89 +10,105 @@ const config = {
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))"
+        border: "#e4e4e7",
+        input: "#e4e4e7",
+        ring: "#e05d44",
+        background: "#faf9f6",
+        foreground: "#18181b",
+        
+        cream: {
+          DEFAULT: "#faf9f6",
+          50: "#ffffff",
+          100: "#faf9f6",
+          200: "#f4f2eb",
+          300: "#ebe8df",
+          400: "#dedad0",
+          500: "#c4beaf"
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))"
+        coral: {
+          DEFAULT: "#e05d44",
+          hover: "#cc4f37",
+          50: "#fff5f3",
+          100: "#ffe9e4",
+          200: "#ffd5cc",
+          300: "#fcae9f",
+          400: "#f4826b",
+          500: "#e05d44",
+          600: "#cc4f37",
+          700: "#ab3e29"
         },
-        // Cyber-Cartographic Semantic Palette
+        sage: {
+          DEFAULT: "#059669",
+          50: "#f0fdf4",
+          100: "#dcfce7",
+          200: "#bbf7d0",
+          500: "#10b981",
+          600: "#059669",
+          700: "#047857"
+        },
+        amber: {
+          DEFAULT: "#d97706",
+          50: "#fffbeb",
+          100: "#fef3c7",
+          200: "#fde68a",
+          500: "#f59e0b",
+          600: "#d97706"
+        },
+        ink: {
+          DEFAULT: "#18181b",
+          secondary: "#3f3f46",
+          muted: "#71717a",
+          light: "#a1a1aa",
+          border: "#e4e4e7",
+          card: "#ffffff"
+        },
+        
+        // Fallback tokens cleanly remapped to Light Mode
         obsidian: {
-          DEFAULT: "#05070a",
-          sub: "#090d14",
-          card: "#0d1117",
-          border: "#161d2a"
+          DEFAULT: "#faf9f6",
+          sub: "#f4f2eb",
+          card: "#ffffff",
+          border: "#e4e4e7"
         },
         tungsten: {
-          DEFAULT: "#0d1117",
-          card: "#121824",
-          panel: "#161f2e",
-          border: "#1f2b3e",
-          muted: "#2e3f5c"
+          DEFAULT: "#faf9f6",
+          card: "#ffffff",
+          panel: "#f4f2eb",
+          border: "#e4e4e7",
+          muted: "#71717a"
         },
         phosphor: {
-          DEFAULT: "#00ff88",
-          dim: "#00cc6a",
-          glow: "rgba(0, 255, 136, 0.4)",
-          dark: "#00381d"
+          DEFAULT: "#e05d44",
+          dim: "#cc4f37",
+          glow: "rgba(224, 93, 68, 0.15)",
+          dark: "#fff1ee"
         },
         solar: {
-          DEFAULT: "#ffb700",
-          dim: "#d99b00",
-          glow: "rgba(255, 183, 0, 0.4)",
-          dark: "#3d2c00"
+          DEFAULT: "#d97706",
+          dim: "#b45309",
+          glow: "rgba(217, 119, 6, 0.15)",
+          dark: "#fef3c7"
         },
         cyan: {
-          DEFAULT: "#00e5ff",
-          dim: "#00b4cc",
-          glow: "rgba(0, 229, 255, 0.4)",
-          dark: "#00343d"
-        },
-        azure: {
-          DEFAULT: "#38bdf8",
-          dim: "#0284c7"
+          DEFAULT: "#0284c7",
+          dim: "#0369a1",
+          glow: "rgba(2, 132, 199, 0.15)",
+          dark: "#e0f2fe"
         },
         violet: {
-          DEFAULT: "#a855f7",
-          dim: "#9333ea"
+          DEFAULT: "#7c3aed",
+          dim: "#6d28d9"
         },
         crimson: {
-          DEFAULT: "#ff0055",
-          dim: "#e11d48"
+          DEFAULT: "#e11d48",
+          dim: "#be123c"
         },
         steel: {
-          DEFAULT: "#94a3b8",
-          muted: "#64748b"
-        },
-        // Backward-compatible Neo tokens
-        neo: {
-          lime: "#ccff00",
-          orange: "#ff5500",
-          blue: "#3b82f6",
-          purple: "#a855f7",
-          pink: "#ff2e93",
-          dark: "#09090b",
-          card: "#121217",
-          border: "#27272a"
+          DEFAULT: "#52525b",
+          muted: "#71717a"
         }
       },
       fontFamily: {
-        mono: [
-          "ui-monospace",
-          "SFMono-Regular",
-          "Cascadia Code",
-          "Source Code Pro",
-          "Menlo",
-          "Consolas",
-          "monospace"
-        ],
         sans: [
           "Inter",
           "-apple-system",
@@ -100,53 +116,22 @@ const config = {
           "Segoe UI",
           "Roboto",
           "sans-serif"
+        ],
+        mono: [
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "monospace"
         ]
       },
       boxShadow: {
-        "glow-phosphor": "0 0 15px rgba(0, 255, 136, 0.45), 0 0 30px rgba(0, 255, 136, 0.2)",
-        "glow-solar": "0 0 15px rgba(255, 183, 0, 0.45), 0 0 30px rgba(255, 183, 0, 0.2)",
-        "glow-cyan": "0 0 15px rgba(0, 229, 255, 0.45), 0 0 30px rgba(0, 229, 255, 0.2)",
-        "glow-violet": "0 0 15px rgba(168, 85, 247, 0.45), 0 0 30px rgba(168, 85, 247, 0.2)",
-        "glow-crimson": "0 0 15px rgba(255, 0, 85, 0.45), 0 0 30px rgba(255, 0, 85, 0.2)",
-        "tactical-card": "0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 0 0 1px rgba(255, 255, 255, 0.05)",
-        "tactical-active": "0 0 20px rgba(0, 255, 136, 0.25), inset 0 0 15px rgba(0, 255, 136, 0.1)",
-        "neo-sm": "2px 2px 0px 0px #27272a",
-        "neo": "4px 4px 0px 0px #27272a",
-        "neo-lg": "6px 6px 0px 0px #27272a",
-        "neo-lime": "4px 4px 0px 0px #ccff00",
-        "neo-orange": "4px 4px 0px 0px #ff5500",
-        "neo-blue": "4px 4px 0px 0px #3b82f6",
-        "neo-white": "4px 4px 0px 0px #ffffff"
-      },
-      keyframes: {
-        "radar-sweep": {
-          "0%": { transform: "rotate(0deg)" },
-          "100%": { transform: "rotate(360deg)" }
-        },
-        "hud-blink": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.3" }
-        },
-        "scanline": {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(1000%)" }
-        },
-        "waveform": {
-          "0%": { transform: "scaleY(0.2)" },
-          "100%": { transform: "scaleY(1.0)" }
-        },
-        ticker: {
-          "0%": { transform: "translate3d(0, 0, 0)" },
-          "100%": { transform: "translate3d(-50%, 0, 0)" }
-        }
-      },
-      animation: {
-        "radar-sweep": "radar-sweep 4s linear infinite",
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "hud-blink": "hud-blink 1s ease-in-out infinite",
-        "scanline": "scanline 8s linear infinite",
-        "waveform": "waveform 1.2s ease-in-out infinite alternate",
-        "telemetry-ticker": "ticker 30s linear infinite"
+        "warm-sm": "0 1px 2px 0 rgba(0, 0, 0, 0.04)",
+        "warm": "0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03)",
+        "warm-md": "0 6px 20px -2px rgba(24, 24, 27, 0.07), 0 2px 6px -1px rgba(24, 24, 27, 0.04)",
+        "warm-lg": "0 12px 32px -4px rgba(24, 24, 27, 0.09), 0 4px 12px -2px rgba(24, 24, 27, 0.05)",
+        "warm-coral": "0 8px 20px -3px rgba(224, 93, 68, 0.25)"
       }
     }
   },

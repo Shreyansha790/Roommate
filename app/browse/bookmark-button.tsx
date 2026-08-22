@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase";
 import { Bookmark } from "lucide-react";
 
-export function BookmarkButton({ listingId, userId }: { listingId: string; userId: string | null }) {
+export function BookmarkButton({ listingId, userId }: { listingId: string; userId?: string | null }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -13,7 +13,7 @@ export function BookmarkButton({ listingId, userId }: { listingId: string; userI
     e.stopPropagation();
 
     if (!userId) {
-      window.location.href = "/login";
+      setSaved(!saved);
       return;
     }
 
@@ -33,18 +33,16 @@ export function BookmarkButton({ listingId, userId }: { listingId: string; userI
     <button
       onClick={toggleSave}
       disabled={saving}
-      title={saved ? "Remove from saved" : "Save listing"}
-      className={`relative flex h-8 w-8 items-center justify-center rounded-lg border transition-all duration-150 ${
+      title={saved ? "Remove from wishlist" : "Save listing"}
+      className={`relative flex h-8 w-8 items-center justify-center rounded-full border transition shadow-sm ${
         saved
-          ? "border-[#ff5500] bg-[#ff5500] text-black shadow-[2px_2px_0px_#ffffff]"
-          : "border-zinc-800 bg-[#121217] text-zinc-400 hover:border-zinc-500 hover:text-white"
+          ? "border-coral-500 bg-coral-500 text-white"
+          : "border-stone-200 bg-white/90 backdrop-blur-md text-stone-600 hover:text-coral-500 hover:bg-white"
       }`}
     >
       <Bookmark
-        className={`h-4 w-4 ${saved ? "fill-black text-black" : ""}`}
+        className={`h-3.5 w-3.5 ${saved ? "fill-white text-white" : ""}`}
       />
     </button>
   );
 }
-
-

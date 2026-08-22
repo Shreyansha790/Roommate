@@ -48,60 +48,60 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[calc(100vh-140px)] max-w-md items-center px-4 py-12 sm:px-6 font-mono text-xs">
-      <div className="bento-card reticle-border w-full p-8 space-y-6">
-        <div className="space-y-3 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-phosphor/10 border border-phosphor/30 text-phosphor">
-            <UserPlus className="h-7 w-7" />
+    <main className="mx-auto flex min-h-[calc(100vh-140px)] max-w-md items-center px-4 py-12 sm:px-6 font-sans text-stone-800">
+      <div className="bento-card w-full p-8 space-y-6 shadow-warm-lg">
+        <div className="space-y-2 text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-coral-100 text-coral-600 font-bold shadow-sm">
+            <UserPlus className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-black uppercase text-white tracking-tight">NEW_NODE_REGISTRATION</h1>
-          <p className="text-steel-muted text-[11px]">Join the network to discover verified spaces and compatible flatmates</p>
+          <h1 className="text-2xl font-black text-stone-900 tracking-tight">Create Account</h1>
+          <p className="text-stone-500 text-xs">Join RoommateSphere to discover verified rooms and compatible flatmates</p>
         </div>
 
         {errorMessage ? (
-          <div className="rounded-lg border border-crimson/30 bg-crimson/10 p-3 text-crimson font-mono text-xs">
-            [REG_ERROR] {errorMessage}
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-rose-700 text-xs">
+            {errorMessage}
           </div>
         ) : null}
 
         <form className="space-y-4" onSubmit={onSubmit}>
-          <div>
-            <label className="text-steel-muted font-bold uppercase block mb-1.5">FULL_NAME</label>
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-stone-700 block">Full Name</label>
             <div className="relative">
-              <User className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-steel-muted" />
+              <User className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-stone-400" />
               <input
                 name="name"
                 placeholder="Riya Shah"
                 required
-                className="w-full neo-input pl-10 p-3"
+                className="w-full neo-input pl-10 p-3 text-xs"
               />
             </div>
           </div>
 
-          <div>
-            <label className="text-steel-muted font-bold uppercase block mb-1.5">EMAIL_ADDRESS</label>
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-stone-700 block">Email Address</label>
             <div className="relative">
-              <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-steel-muted" />
+              <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-stone-400" />
               <input
                 name="email"
                 type="email"
                 placeholder="name@example.com"
                 required
-                className="w-full neo-input pl-10 p-3"
+                className="w-full neo-input pl-10 p-3 text-xs"
               />
             </div>
           </div>
 
-          <div>
-            <label className="text-steel-muted font-bold uppercase block mb-1.5">PASSWORD</label>
+          <div className="space-y-1">
+            <label className="text-xs font-bold text-stone-700 block">Password</label>
             <div className="relative">
-              <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-steel-muted" />
+              <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-stone-400" />
               <input
                 name="password"
                 type="password"
-                placeholder="Create secure passphrase"
+                placeholder="Create a secure password"
                 required
-                className="w-full neo-input pl-10 p-3"
+                className="w-full neo-input pl-10 p-3 text-xs"
               />
             </div>
           </div>
@@ -109,16 +109,16 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="neo-button w-full py-3.5 font-black uppercase tracking-wider text-xs"
+            className="neo-button w-full py-3.5 font-bold text-sm tracking-wide"
           >
-            {loading ? "INITIALIZING_PROFILE..." : "CONTINUE_TO_VIBE_CALIBRATION"}
+            {loading ? "Creating Account..." : "Continue to Vibe Quiz"}
           </button>
         </form>
 
-        <p className="text-center text-steel-muted">
-          EXISTING_NODE?{" "}
-          <Link href="/login" className="font-bold text-phosphor hover:underline">
-            [ SIGN_IN ]
+        <p className="text-center text-xs text-stone-500">
+          Already have an account?{" "}
+          <Link href="/login" className="font-bold text-coral-600 hover:underline">
+            Sign in
           </Link>
         </p>
       </div>

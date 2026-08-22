@@ -1,33 +1,23 @@
-import Link from "next/link";
-import { Zap } from "lucide-react";
-import { TacticalBadge } from "@/components/HUD/TacticalBadge";
+"use client";
 
-export type CompatibilityBadgeProps = {
-  score: number;
-};
+import { Sparkles } from "lucide-react";
 
-export function CompatibilityBadge({ score }: CompatibilityBadgeProps) {
-  if (score < 0) {
-    return (
-      <Link href="/onboarding">
-        <TacticalBadge
-          variant="amber"
-          size="xs"
-          pulse
-          icon={<Zap className="h-2.5 w-2.5 mr-1" />}
-          className="cursor-pointer"
-        >
-          CALIBRATE_DNA
-        </TacticalBadge>
-      </Link>
-    );
-  }
-
-  const variant = score >= 80 ? "emerald" : score >= 60 ? "cyan" : "amber";
+export function CompatibilityBadge({ score = 92 }: { score?: number }) {
+  const isHigh = score >= 85;
+  const isMedium = score >= 70;
 
   return (
-    <TacticalBadge variant={variant} size="xs" pulse>
-      {`${score}%_SYNC`}
-    </TacticalBadge>
+    <div
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition ${
+        isHigh
+          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+          : isMedium
+          ? "bg-amber-50 text-amber-700 border border-amber-200"
+          : "bg-stone-100 text-stone-700 border border-stone-200"
+      }`}
+    >
+      <Sparkles className="h-3 w-3" />
+      <span>{score}% Match</span>
+    </div>
   );
 }

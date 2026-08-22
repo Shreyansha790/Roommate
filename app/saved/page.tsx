@@ -3,7 +3,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase-server";
 import { CompatibilityBadge } from "@/components/CompatibilityBadge";
 import { DEMO_LISTINGS } from "@/lib/demo-data";
-import { Bookmark, MapPin, ArrowRight, Zap } from "lucide-react";
+import { Bookmark, MapPin, ArrowRight, Sparkles } from "lucide-react";
 
 export default async function SavedListingsPage() {
   const supabase = await createClient();
@@ -49,52 +49,53 @@ export default async function SavedListingsPage() {
       }
     }
   } else {
-    validListings = DEMO_LISTINGS.slice(0, 2);
+    validListings = DEMO_LISTINGS.slice(0, 3);
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 font-mono text-xs">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-tungsten-border pb-6">
+    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 font-sans text-stone-800">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-stone-200 pb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="sticker-pill border-cyan bg-cyan/10 text-cyan">
-              SAVED // TELEMETRY
+            <span className="bg-coral-50 text-coral-700 font-bold text-xs px-2.5 py-1 rounded-full border border-coral-200">
+              Wishlist
             </span>
-            <span className="text-steel-muted">[{validListings.length} NODES_BOOKMARKED]</span>
+            <span className="text-stone-400 text-xs font-semibold">{validListings.length} Spaces Saved</span>
           </div>
-          <h1 className="text-3xl font-black uppercase text-white sm:text-4xl">
-            Bookmarked Living Nodes
+          <h1 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">
+            Bookmarked Living Spaces
           </h1>
-          <p className="mt-1 text-steel-muted">
-            Compare vibe telemetry and track available slots across your saved spaces.
+          <p className="mt-1 text-stone-500 text-xs sm:text-sm">
+            Keep track of open listings and compare vibe compatibility ratings.
           </p>
         </div>
 
         <Link
           href="/browse"
-          className="neo-button-secondary inline-flex items-center gap-2 px-5 py-2.5 font-bold text-xs"
+          className="neo-button-secondary inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold"
         >
-          <span>[ EXPLORE_MORE_NODES ]</span>
+          <span>Explore More Spaces</span>
           <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
 
+      {/* Grid or Empty */}
       {validListings.length === 0 ? (
-        <div className="bento-card reticle-border p-12 text-center space-y-4 max-w-lg mx-auto">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-tungsten border border-tungsten-border text-steel-muted">
+        <div className="bento-card p-12 text-center space-y-4 max-w-md mx-auto">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-coral-50 text-coral-500">
             <Bookmark className="h-6 w-6" />
           </div>
-          <h3 className="text-xl font-black uppercase text-white">No Bookmarks Recorded</h3>
-          <p className="text-steel-muted max-w-sm mx-auto">
-            Browse through the verified living directory and bookmark listings to save them to this telemetry board.
+          <h3 className="text-lg font-bold text-stone-900">No Saved Listings Yet</h3>
+          <p className="text-xs text-stone-500">
+            Click the bookmark icon on any listing card to save it here for easy comparison.
           </p>
           <div className="pt-2">
             <Link
               href="/browse"
-              className="neo-button inline-flex items-center gap-2 px-6 py-3 font-black uppercase text-xs"
+              className="neo-button inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold shadow-warm-coral"
             >
-              <Zap className="h-4 w-4 fill-current" />
-              <span>EXPLORE_LISTINGS_NOW</span>
+              <span>Explore Listings Now</span>
             </Link>
           </div>
         </div>
@@ -102,24 +103,24 @@ export default async function SavedListingsPage() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {validListings.map((listing: any, idx: number) => {
             const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
-            const compatibilityScore = compatibilityByUserId.get(listing.user_id) ?? (85 + ((idx * 6) % 15));
+            const compatibilityScore = compatibilityByUserId.get(listing.user_id) ?? (86 + ((idx * 5) % 10));
             const photo = listing.photos?.[0] || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80";
 
             return (
               <article
                 key={listing.id}
-                className="bento-card-interactive overflow-hidden p-0 flex flex-col justify-between"
+                className="bento-card-interactive group overflow-hidden p-0 flex flex-col justify-between"
               >
-                <div className="relative h-48 w-full overflow-hidden bg-obsidian">
+                <div className="relative h-48 w-full overflow-hidden bg-stone-100">
                   <Image
                     src={photo}
                     alt={listing.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    sizes="(max-width: 768px) 100vw, 25vw"
                     className="object-cover transition duration-300 group-hover:scale-105"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="sticker-pill border-obsidian bg-obsidian text-white text-[10px]">
+                    <span className="bg-white/90 backdrop-blur-md text-stone-800 font-bold text-[10px] px-2.5 py-1 rounded-full shadow-sm">
                       {listing.room_type?.replace("_", " ").toUpperCase() || "ROOM"}
                     </span>
                   </div>
@@ -127,55 +128,53 @@ export default async function SavedListingsPage() {
                     <CompatibilityBadge score={compatibilityScore} />
                   </div>
                   <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
-                    <div className="rounded-lg bg-obsidian/90 px-2.5 py-1 border border-tungsten-border">
-                      <span className="font-mono text-base font-black text-phosphor">&#8377;{Number(listing.rent).toLocaleString()}</span>
-                      <span className="font-mono text-[10px] text-steel-muted">/mo</span>
+                    <div className="rounded-xl bg-white/95 backdrop-blur-md px-3 py-1 shadow-sm border border-stone-200">
+                      <span className="font-extrabold text-sm text-stone-900">₹{Number(listing.rent).toLocaleString()}</span>
+                      <span className="text-[10px] text-stone-500 font-medium">/mo</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-4 space-y-3">
                   <div>
-                    <Link href={`/listings/${listing.id}`} className="block hover:text-phosphor transition">
-                      <h3 className="line-clamp-1 text-sm font-black uppercase text-white">
+                    <Link href={`/listings/${listing.id}`} className="hover:text-coral-600 transition">
+                      <h3 className="line-clamp-1 text-sm font-bold text-stone-900">
                         {listing.title}
                       </h3>
                     </Link>
-                    <p className="mt-1 flex items-center gap-1 text-[11px] text-steel-muted">
-                      <MapPin className="h-3.5 w-3.5 text-phosphor shrink-0" />
-                      <span className="truncate">{listing.locality}, {listing.city}</span>
+                    <p className="mt-1 flex items-center gap-1 text-xs text-stone-500 font-medium">
+                      <MapPin className="h-3.5 w-3.5 text-coral-500 shrink-0" />
+                      <span>{listing.locality}, {listing.city}</span>
                     </p>
                   </div>
 
                   {profile && (
-                    <div className="flex items-center gap-2.5 rounded-lg border border-tungsten-border bg-obsidian-sub p-2">
+                    <div className="flex items-center gap-2.5 rounded-xl border border-stone-100 bg-[#faf9f6] p-2">
                       {profile.avatar_url ? (
                         <Image
                           src={profile.avatar_url}
-                          alt={profile.full_name}
+                          alt={profile.full_name || "Host"}
                           width={24}
                           height={24}
-                          className="h-6 w-6 rounded-md object-cover border border-tungsten-border"
+                          className="h-6 w-6 rounded-full object-cover border border-stone-200"
                         />
                       ) : (
-                        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-phosphor/10 border border-phosphor/30 text-[10px] font-black text-phosphor">
+                        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-coral-100 text-[10px] font-bold text-coral-600">
                           {profile.full_name?.[0] || "H"}
                         </div>
                       )}
-                      <p className="truncate font-bold text-slate-200">{profile.full_name}</p>
+                      <p className="truncate text-xs font-semibold text-stone-800">{profile.full_name}</p>
                     </div>
                   )}
 
-                  <div className="pt-2 border-t border-tungsten-border flex items-center justify-between text-[11px]">
-                    <span className="text-steel-muted">
-                      {listing.available_from || "IMMEDIATE"}
-                    </span>
+                  <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                    <span>{listing.available_from || "Immediate"}</span>
                     <Link
                       href={`/listings/${listing.id}`}
-                      className="font-bold text-phosphor hover:underline inline-flex items-center gap-1"
+                      className="font-bold text-coral-600 hover:text-coral-700 inline-flex items-center gap-1"
                     >
-                      <span>[ VIEW ]</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <span>View</span>
+                      <ArrowRight className="h-3 w-3" />
                     </Link>
                   </div>
                 </div>

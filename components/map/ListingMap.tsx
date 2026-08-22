@@ -100,10 +100,10 @@ export function ListingMap({
   if (!mounted || !leafletL) {
     return (
       <div
-        className="flex items-center justify-center rounded-xl border border-tungsten-border bg-obsidian-card font-mono text-xs text-slate-500 animate-pulse"
+        className="flex items-center justify-center rounded-2xl border border-stone-200 bg-stone-50 font-sans text-xs text-stone-400"
         style={{ height }}
       >
-        <span>INITIALIZING_RADAR_MAP_TILES...</span>
+        <span>Loading map views...</span>
       </div>
     );
   }
@@ -120,24 +120,22 @@ export function ListingMap({
 
   // Helper to create custom HTML Pin
   const createMarkerIcon = (isSelected: boolean, score?: number) => {
-    const pinColor = isSelected ? "#ffb700" : "#00ff88";
+    const pinBg = isSelected ? "#d97706" : "#e05d44";
 
     return leafletL.divIcon({
       className: "custom-leaflet-pin",
       html: `
-        <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px;">
-          <div style="position: absolute; width: 28px; height: 28px; border-radius: 9999px; background-color: ${pinColor}; opacity: 0.25; animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;"></div>
-          <div style="position: relative; width: 14px; height: 14px; border-radius: 9999px; background-color: #05070a; border: 2.5px solid ${pinColor}; box-shadow: 0 0 10px ${pinColor};"></div>
-          ${score ? `<span style="position: absolute; bottom: -14px; font-family: monospace; font-size: 8px; font-weight: bold; color: #ffffff; background: #0d1117; border: 1px solid ${pinColor}; border-radius: 3px; padding: 0 2px;">${score}%</span>` : ""}
+        <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;">
+          <div style="position: relative; width: 16px; height: 16px; border-radius: 9999px; background-color: ${pinBg}; border: 3px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.25);"></div>
+          ${score ? `<span style="position: absolute; bottom: -14px; font-family: sans-serif; font-size: 9px; font-weight: bold; color: #18181b; background: #ffffff; border: 1px solid #e4e4e7; border-radius: 9999px; padding: 1px 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">${score}%</span>` : ""}
         </div>
       `,
-      iconSize: [28, 28],
-      iconAnchor: [14, 14],
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
       popupAnchor: [0, -16]
     });
   };
 
-  // If listings are passed, render all pins; otherwise render single marker for city/locality
   const displayItems = listings.length > 0 ? listings : [{
     id: "single-pos",
     title: `${locality ? locality + ", " : ""}${cleanCity}`,
@@ -150,29 +148,19 @@ export function ListingMap({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-xl border border-tungsten-border bg-obsidian chamfer-card-sm select-none"
+      className="relative w-full overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm select-none"
       style={{ height }}
     >
-      {/* Top Map HUD Ticker Overlay */}
-      <div className="absolute top-2 left-2 z-[400] flex items-center gap-2 rounded border border-tungsten-border/80 bg-obsidian-sub/90 px-2.5 py-1 text-[10px] font-mono text-slate-300 backdrop-blur-md">
-        <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />
-        <span className="font-bold text-white">RADAR_TILES: CARTO_DARK</span>
-        <span className="text-slate-500">|</span>
-        <span className="text-cyan-400">{cleanCity.toUpperCase()}</span>
-        <span className="text-slate-500">|</span>
-        <span className="text-phosphor font-bold">{listings.length > 0 ? `${listings.length} NODES` : "1 NODE"}</span>
-      </div>
-
       <MapContainer
         center={centerPos}
         zoom={listings.length > 1 ? 12 : 13}
         scrollWheelZoom={true}
-        style={{ height: "100%", width: "100%", zIndex: 0, backgroundColor: "#05070a" }}
+        style={{ height: "100%", width: "100%", zIndex: 0, backgroundColor: "#f5f4ef" }}
       >
-        {/* CartoDB Dark Matter Obsidian Tile Layer */}
+        {/* CartoDB Voyager Clean Light Tiles */}
         <TileLayer
           attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         />
 
         {displayItems.map((item, idx) => {
@@ -196,10 +184,10 @@ export function ListingMap({
                 click: () => onSelectListing?.(item.id)
               }}
             >
-              <Popup className="dark-cyber-popup">
-                <div className="chamfer-card-sm border border-tungsten-border bg-tungsten-card p-2 text-slate-100 font-mono text-xs max-w-[200px]">
+              <Popup className="warm-light-popup">
+                <div className="bg-white p-2 text-stone-800 font-sans text-xs max-w-[200px] rounded-xl">
                   {item.photos?.[0] && (
-                    <div className="relative h-20 w-full mb-1.5 overflow-hidden rounded">
+                    <div className="relative h-20 w-full mb-1.5 overflow-hidden rounded-lg">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={item.photos[0]}
@@ -208,15 +196,15 @@ export function ListingMap({
                       />
                     </div>
                   )}
-                  <p className="font-bold text-white line-clamp-1">{item.title}</p>
-                  <p className="text-[10px] text-slate-400 mt-0.5">{item.locality}, {item.city}</p>
-                  <div className="mt-1 flex items-center justify-between border-t border-tungsten-border/60 pt-1">
-                    <span className="font-bold text-phosphor">₹{item.rent.toLocaleString()}/mo</span>
+                  <p className="font-bold text-stone-900 line-clamp-1">{item.title}</p>
+                  <p className="text-[11px] text-stone-500 mt-0.5">{item.locality}, {item.city}</p>
+                  <div className="mt-1 flex items-center justify-between border-t border-stone-100 pt-1">
+                    <span className="font-bold text-coral-600">₹{item.rent.toLocaleString()}/mo</span>
                     <a
                       href={`/listings/${item.id}`}
-                      className="text-[10px] text-cyan-400 hover:underline font-bold"
+                      className="text-[11px] text-coral-600 hover:underline font-bold"
                     >
-                      DOSSIER [→]
+                      View →
                     </a>
                   </div>
                 </div>

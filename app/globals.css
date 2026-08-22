@@ -4,306 +4,124 @@
 
 @layer base {
   :root {
-    --background: 222 47% 3%;
-    --foreground: 210 40% 98%;
-    --primary: 151 100% 50%;
-    --primary-foreground: 222 47% 3%;
-    --secondary: 217 33% 10%;
-    --secondary-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 151 100% 50%;
-  }
-
-  * {
-    @apply border-tungsten-border;
+    --background: 40 33% 98%;
+    --foreground: 240 10% 10%;
+    --primary: 11 74% 57%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 20% 95%;
+    --secondary-foreground: 240 10% 10%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 11 74% 57%;
   }
 
   body {
-    @apply min-h-screen bg-obsidian text-slate-100 antialiased selection:bg-phosphor selection:text-black;
-    background-color: #05070a;
-    background-image: 
-      radial-gradient(rgba(0, 229, 255, 0.08) 1px, transparent 1px),
-      linear-gradient(to right, rgba(22, 29, 42, 0.25) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(22, 29, 42, 0.25) 1px, transparent 1px);
-    background-size: 24px 24px, 48px 48px, 48px 48px;
-    background-position: 0 0, 0 0, 0 0;
+    @apply min-h-screen bg-cream text-zinc-900 antialiased selection:bg-coral-100 selection:text-coral-700;
+    background-color: #faf9f6;
   }
 }
 
-/* Custom Cyber Tactical Scrollbars */
+/* Custom Soft Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #05070a;
-  border-left: 1px solid #161d2a;
+  background: #faf9f6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1f2b3e;
-  border-radius: 0px;
+  background: #d4d4d8;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00ff88;
-  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
+  background: #a1a1aa;
 }
 
-/* Chamfered Polygonal HUD Surfaces */
-.chamfer-card {
-  background: #0d1117;
-  border: 1px solid #1f2b3e;
-  clip-path: polygon(
-    0 12px,
-    12px 0,
-    calc(100% - 12px) 0,
-    100% 12px,
-    100% calc(100% - 12px),
-    calc(100% - 12px) 100%,
-    12px 100%,
-    0 calc(100% - 12px)
-  );
-  position: relative;
-}
-
-.chamfer-card-sm {
-  background: #0d1117;
-  border: 1px solid #1f2b3e;
-  clip-path: polygon(
-    0 6px,
-    6px 0,
-    calc(100% - 6px) 0,
-    100% 6px,
-    100% calc(100% - 6px),
-    calc(100% - 6px) 100%,
-    6px 100%,
-    0 calc(100% - 6px)
-  );
-  position: relative;
-}
-
-.chamfer-card-interactive {
-  background: #0d1117;
-  border: 1px solid #1f2b3e;
-  clip-path: polygon(
-    0 12px,
-    12px 0,
-    calc(100% - 12px) 0,
-    100% 12px,
-    100% calc(100% - 12px),
-    calc(100% - 12px) 100%,
-    12px 100%,
-    0 calc(100% - 12px)
-  );
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-}
-.chamfer-card-interactive:hover {
-  border-color: #00ff88;
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2), inset 0 0 15px rgba(0, 255, 136, 0.05);
-  transform: translateY(-2px);
-}
-
-.tech-tile {
-  background: rgba(13, 17, 23, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid #1f2b3e;
-  position: relative;
-}
-
-/* Tactical Reticle Border Corners */
-.reticle-border {
-  position: relative;
-}
-.reticle-border::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid #00ff88;
-  border-left: 2px solid #00ff88;
-  pointer-events: none;
-  z-index: 10;
-}
-.reticle-border::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  right: -1px;
-  width: 10px;
-  height: 10px;
-  border-bottom: 2px solid #00ff88;
-  border-right: 2px solid #00ff88;
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Reticle Cyan Variant */
-.reticle-border-cyan {
-  position: relative;
-}
-.reticle-border-cyan::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid #00e5ff;
-  border-left: 2px solid #00e5ff;
-  pointer-events: none;
-  z-index: 10;
-}
-.reticle-border-cyan::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  right: -1px;
-  width: 10px;
-  height: 10px;
-  border-bottom: 2px solid #00e5ff;
-  border-right: 2px solid #00e5ff;
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Scanline Overlay Utility */
-.scanline-overlay {
-  position: relative;
-  overflow: hidden;
-}
-.scanline-overlay::after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.03),
-    rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.03)
-  );
-  z-index: 20;
-  background-size: 100% 3px, 6px 100%;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-/* Monospace Tactical Text Glows */
-.glow-text-emerald {
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.65), 0 0 20px rgba(0, 255, 136, 0.35);
-}
-.glow-text-cyan {
-  text-shadow: 0 0 10px rgba(0, 229, 255, 0.65), 0 0 20px rgba(0, 229, 255, 0.35);
-}
-.glow-text-amber {
-  text-shadow: 0 0 10px rgba(255, 183, 0, 0.65), 0 0 20px rgba(255, 183, 0, 0.35);
-}
-.glow-text-violet {
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.65), 0 0 20px rgba(168, 85, 247, 0.35);
-}
-.glow-text-crimson {
-  text-shadow: 0 0 10px rgba(255, 0, 85, 0.65), 0 0 20px rgba(255, 0, 85, 0.35);
-}
-
-/* Backward-compatible Neo styles with cyber upgrade */
+/* Warm Editorial Card Styles */
 .bento-card {
-  background: #0d1117;
-  border: 1px solid #1f2b3e;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card-interactive {
-  background: #0d1117;
-  border: 1px solid #1f2b3e;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bento-card-interactive:hover {
   transform: translateY(-2px);
-  border-color: #00ff88;
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  border-color: #ffd5cc;
+  box-shadow: 0 8px 24px -4px rgba(224, 93, 68, 0.12), 0 4px 12px -2px rgba(24, 24, 27, 0.04);
 }
 
+.chamfer-card, .chamfer-card-interactive, .tech-tile {
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Inputs & Form Controls */
 .neo-input {
-  background: #090d14;
-  border: 1px solid #1f2b3e;
-  color: #f4f4f5;
-  border-radius: 8px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  color: #18181b;
+  border-radius: 0.75rem;
   transition: all 0.15s ease;
 }
 .neo-input:focus {
-  border-color: #00ff88;
-  box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
+  border-color: #e05d44;
+  box-shadow: 0 0 0 3px rgba(224, 93, 68, 0.15);
   outline: none;
-  background: #0d1117;
+  background: #ffffff;
 }
 
+/* Primary Warm CTA Button */
 .neo-button {
-  background: #00ff88;
-  color: #05070a;
-  font-weight: 800;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  border: 1px solid #00cc6a;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
-  transition: all 0.15s ease;
+  background: #e05d44;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(224, 93, 68, 0.25);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .neo-button:hover {
-  background: #00cc6a;
-  box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+  background: #cc4f37;
+  box-shadow: 0 6px 18px rgba(224, 93, 68, 0.35);
   transform: translateY(-1px);
 }
 .neo-button:active {
-  transform: translateY(1px);
+  transform: translateY(0px);
 }
 
+/* Secondary Button */
 .neo-button-secondary {
-  background: #121824;
-  color: #f4f4f5;
-  font-weight: 700;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  border: 1px solid #1f2b3e;
-  border-radius: 8px;
+  background: #ffffff;
+  color: #27272a;
+  font-weight: 600;
+  border: 1px solid #e4e4e7;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   transition: all 0.15s ease;
 }
 .neo-button-secondary:hover {
-  border-color: #00e5ff;
-  color: #00e5ff;
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+  border-color: #d4d4d8;
+  background: #faf9f6;
+  color: #18181b;
   transform: translateY(-1px);
 }
-.neo-button-secondary:active {
-  transform: translateY(1px);
-}
 
+/* Sticker / Pill Badges */
 .sticker-pill {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-weight: 700;
+  letter-spacing: 0.025em;
+  font-weight: 600;
   padding: 0.25rem 0.65rem;
-  border-radius: 4px;
+  border-radius: 9999px;
   border: 1px solid currentColor;
-}
-
-@keyframes ticker {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
-}
-
-.animate-ticker {
-  display: flex;
-  width: 200%;
-  animation: ticker 25s linear infinite;
 }
