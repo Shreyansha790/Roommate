@@ -4,115 +4,286 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --primary: 74 100% 50%;
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 74 100% 50%;
+    --background: 222 47% 3%;
+    --foreground: 210 40% 98%;
+    --primary: 151 100% 50%;
+    --primary-foreground: 222 47% 3%;
+    --secondary: 217 33% 10%;
+    --secondary-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 151 100% 50%;
   }
 
   * {
-    @apply border-zinc-800;
+    @apply border-tungsten-border;
   }
 
   body {
-    @apply min-h-screen bg-[#09090b] text-zinc-100 antialiased selection:bg-[#ccff00] selection:text-black;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-    background-size: 24px 24px;
+    @apply min-h-screen bg-obsidian text-slate-100 antialiased selection:bg-phosphor selection:text-black;
+    background-color: #05070a;
+    background-image: 
+      radial-gradient(rgba(0, 229, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(to right, rgba(22, 29, 42, 0.25) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(22, 29, 42, 0.25) 1px, transparent 1px);
+    background-size: 24px 24px, 48px 48px, 48px 48px;
+    background-position: 0 0, 0 0, 0 0;
   }
 }
 
-/* Custom Tactical Scrollbar */
+/* Custom Cyber Tactical Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #05070a;
+  border-left: 1px solid #161d2a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #1f2b3e;
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ccff00;
+  background: #00ff88;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
 }
 
-/* Neo Bento & Brutalist Components */
+/* Chamfered Polygonal HUD Surfaces */
+.chamfer-card {
+  background: #0d1117;
+  border: 1px solid #1f2b3e;
+  clip-path: polygon(
+    0 12px,
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+  position: relative;
+}
+
+.chamfer-card-sm {
+  background: #0d1117;
+  border: 1px solid #1f2b3e;
+  clip-path: polygon(
+    0 6px,
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px)
+  );
+  position: relative;
+}
+
+.chamfer-card-interactive {
+  background: #0d1117;
+  border: 1px solid #1f2b3e;
+  clip-path: polygon(
+    0 12px,
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.chamfer-card-interactive:hover {
+  border-color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2), inset 0 0 15px rgba(0, 255, 136, 0.05);
+  transform: translateY(-2px);
+}
+
+.tech-tile {
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid #1f2b3e;
+  position: relative;
+}
+
+/* Tactical Reticle Border Corners */
+.reticle-border {
+  position: relative;
+}
+.reticle-border::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #00ff88;
+  border-left: 2px solid #00ff88;
+  pointer-events: none;
+  z-index: 10;
+}
+.reticle-border::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid #00ff88;
+  border-right: 2px solid #00ff88;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Reticle Cyan Variant */
+.reticle-border-cyan {
+  position: relative;
+}
+.reticle-border-cyan::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #00e5ff;
+  border-left: 2px solid #00e5ff;
+  pointer-events: none;
+  z-index: 10;
+}
+.reticle-border-cyan::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid #00e5ff;
+  border-right: 2px solid #00e5ff;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Scanline Overlay Utility */
+.scanline-overlay {
+  position: relative;
+  overflow: hidden;
+}
+.scanline-overlay::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  z-index: 20;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Monospace Tactical Text Glows */
+.glow-text-emerald {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.65), 0 0 20px rgba(0, 255, 136, 0.35);
+}
+.glow-text-cyan {
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.65), 0 0 20px rgba(0, 229, 255, 0.35);
+}
+.glow-text-amber {
+  text-shadow: 0 0 10px rgba(255, 183, 0, 0.65), 0 0 20px rgba(255, 183, 0, 0.35);
+}
+.glow-text-violet {
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.65), 0 0 20px rgba(168, 85, 247, 0.35);
+}
+.glow-text-crimson {
+  text-shadow: 0 0 10px rgba(255, 0, 85, 0.65), 0 0 20px rgba(255, 0, 85, 0.35);
+}
+
+/* Backward-compatible Neo styles with cyber upgrade */
 .bento-card {
-  background: #121217;
-  border: 1.5px solid #27272a;
-  border-radius: 18px;
-  box-shadow: 4px 4px 0px 0px #18181b;
+  background: #0d1117;
+  border: 1px solid #1f2b3e;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bento-card-interactive {
-  background: #121217;
-  border: 1.5px solid #27272a;
-  border-radius: 18px;
-  box-shadow: 4px 4px 0px 0px #18181b;
+  background: #0d1117;
+  border: 1px solid #1f2b3e;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bento-card-interactive:hover {
-  transform: translate(-3px, -3px);
-  border-color: #ccff00;
-  box-shadow: 6px 6px 0px 0px #ccff00;
+  transform: translateY(-2px);
+  border-color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
 }
 
 .neo-input {
-  background: #18181f;
-  border: 1.5px solid #27272a;
+  background: #090d14;
+  border: 1px solid #1f2b3e;
   color: #f4f4f5;
-  border-radius: 12px;
+  border-radius: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   transition: all 0.15s ease;
 }
 .neo-input:focus {
-  border-color: #ccff00;
-  box-shadow: 3px 3px 0px 0px #ccff00;
+  border-color: #00ff88;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.35);
   outline: none;
-  background: #1e1e27;
+  background: #0d1117;
 }
 
 .neo-button {
-  background: #ccff00;
-  color: #09090b;
+  background: #00ff88;
+  color: #05070a;
   font-weight: 800;
-  border: 1.5px solid #000;
-  border-radius: 12px;
-  box-shadow: 3px 3px 0px 0px #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: 1px solid #00cc6a;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
   transition: all 0.15s ease;
 }
 .neo-button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px 0px #ffffff;
+  background: #00cc6a;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+  transform: translateY(-1px);
 }
 .neo-button:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px 0px #ffffff;
+  transform: translateY(1px);
 }
 
 .neo-button-secondary {
-  background: #18181f;
+  background: #121824;
   color: #f4f4f5;
   font-weight: 700;
-  border: 1.5px solid #3f3f46;
-  border-radius: 12px;
-  box-shadow: 3px 3px 0px 0px #27272a;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: 1px solid #1f2b3e;
+  border-radius: 8px;
   transition: all 0.15s ease;
 }
 .neo-button-secondary:hover {
-  border-color: #f4f4f5;
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px 0px #3f3f46;
+  border-color: #00e5ff;
+  color: #00e5ff;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+  transform: translateY(-1px);
 }
 .neo-button-secondary:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px 0px #27272a;
+  transform: translateY(1px);
 }
 
 .sticker-pill {
@@ -122,8 +293,8 @@
   text-transform: uppercase;
   font-weight: 700;
   padding: 0.25rem 0.65rem;
-  border-radius: 6px;
-  border: 1.5px solid currentColor;
+  border-radius: 4px;
+  border: 1px solid currentColor;
 }
 
 @keyframes ticker {
@@ -136,4 +307,3 @@
   width: 200%;
   animation: ticker 25s linear infinite;
 }
-

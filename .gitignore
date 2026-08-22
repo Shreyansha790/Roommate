@@ -7,3 +7,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+.agents/
+*.tsbuildinfo
+orig.txt
+tests_output.txt
+

@@ -86,32 +86,32 @@ export default function OnboardingPage() {
       {/* Header */}
       <div className="mb-8 space-y-3 text-center max-w-xl mx-auto">
         <div className="flex items-center justify-center gap-2">
-          <span className="sticker-pill border-[#ccff00] bg-[#ccff00]/10 text-[#ccff00]">
+          <span className="sticker-pill border-phosphor bg-phosphor/10 text-phosphor">
             CALIBRATION_PROTOCOL // STEP_{step}_OF_2
           </span>
         </div>
         <h1 className="text-3xl font-black uppercase text-white tracking-tight">
           Calibrate Your Vibe DNA Matrix
         </h1>
-        <p className="text-zinc-400">
+        <p className="text-steel-muted">
           Match algorithms use these parameters to compute real-time compatibility scores.
         </p>
       </div>
 
       {/* Form Bento Container */}
-      <div className="bento-card p-6 sm:p-10 border-1.5 border-zinc-800 space-y-8">
+      <div className="bento-card p-6 sm:p-10 border-1.5 border-tungsten-border space-y-8">
         {step === 1 ? (
           /* Step 1: Personal Identity */
           <div className="space-y-6">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
-              <span className="font-bold text-[#ccff00] uppercase">[ 01_HUMAN_IDENTITY ]</span>
-              <span className="text-[10px] text-zinc-500">PUBLIC_COMMUNITY_PROFILE</span>
+            <div className="flex items-center justify-between border-b border-tungsten-border pb-3">
+              <span className="font-bold text-phosphor uppercase">[ 01_HUMAN_IDENTITY ]</span>
+              <span className="text-[10px] text-steel-muted">PUBLIC_COMMUNITY_PROFILE</span>
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="space-y-4">
                 <div>
-                  <label className="text-zinc-400 font-bold uppercase block mb-1">FULL_NAME *</label>
+                  <label className="text-steel-muted font-bold uppercase block mb-1">FULL_NAME *</label>
                   <input
                     required
                     value={fullName}
@@ -122,7 +122,7 @@ export default function OnboardingPage() {
                 </div>
 
                 <div>
-                  <label className="text-zinc-400 font-bold uppercase block mb-1">OCCUPATION_ROLE</label>
+                  <label className="text-steel-muted font-bold uppercase block mb-1">OCCUPATION_ROLE</label>
                   <input
                     value={profession}
                     onChange={(e) => setProfession(e.target.value)}
@@ -132,7 +132,7 @@ export default function OnboardingPage() {
                 </div>
 
                 <div>
-                  <label className="text-zinc-400 font-bold uppercase block mb-1">BIO_SUMMARY</label>
+                  <label className="text-steel-muted font-bold uppercase block mb-1">BIO_SUMMARY</label>
                   <textarea
                     rows={3}
                     value={bio}
@@ -144,15 +144,15 @@ export default function OnboardingPage() {
               </div>
 
               {/* Avatar Preset Selector */}
-              <div className="rounded-2xl border border-zinc-800 bg-[#09090b] p-5 space-y-4">
-                <label className="text-zinc-400 font-bold uppercase block">SELECT_AVATAR_DNA</label>
+              <div className="rounded-2xl border border-tungsten-border bg-obsidian-sub p-5 space-y-4">
+                <label className="text-steel-muted font-bold uppercase block">SELECT_AVATAR_DNA</label>
                 <div className="flex items-center gap-4">
-                  <div className="relative h-16 w-16 overflow-hidden rounded-xl border-1.5 border-[#ccff00] shadow-[2px_2px_0px_#ccff00]">
+                  <div className="relative h-16 w-16 overflow-hidden rounded-xl border-1.5 border-phosphor shadow-[2px_2px_0px_#ccff00]">
                     <Image src={avatarUrl} alt="Avatar" fill className="object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-white uppercase text-[11px]">ACTIVE_BADGE</p>
-                    <p className="text-[10px] text-zinc-500">Auto-verified profile ID</p>
+                    <p className="text-[10px] text-steel-muted">Auto-verified profile ID</p>
                   </div>
                 </div>
 
@@ -169,8 +169,8 @@ export default function OnboardingPage() {
                       onClick={() => setAvatarUrl(url)}
                       className={`relative h-14 overflow-hidden rounded-lg border-1.5 transition ${
                         avatarUrl === url
-                          ? "border-[#ccff00] shadow-[2px_2px_0px_#ccff00]"
-                          : "border-zinc-800 opacity-50 hover:opacity-100"
+                          ? "border-phosphor shadow-[2px_2px_0px_#ccff00]"
+                          : "border-tungsten-border opacity-50 hover:opacity-100"
                       }`}
                     >
                       <Image src={url} alt={`Preset ${i + 1}`} fill className="object-cover" />
@@ -193,12 +193,12 @@ export default function OnboardingPage() {
         ) : (
           /* Step 2: Lifestyle & Habits */
           <form onSubmit={onSave} className="space-y-6">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
-              <span className="font-bold text-[#ccff00] uppercase">[ 02_LIFESTYLE_HABIT_CALIBRATION ]</span>
+            <div className="flex items-center justify-between border-b border-tungsten-border pb-3">
+              <span className="font-bold text-phosphor uppercase">[ 02_LIFESTYLE_HABIT_CALIBRATION ]</span>
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="text-zinc-500 hover:text-white"
+                className="text-steel-muted hover:text-white"
               >
                 ← BACK_TO_STEP_01
               </button>
@@ -206,7 +206,7 @@ export default function OnboardingPage() {
 
             {/* Sleep rhythm */}
             <div className="space-y-2">
-              <label className="text-zinc-400 font-bold uppercase">SLEEP_RHYTHM</label>
+              <label className="text-steel-muted font-bold uppercase">SLEEP_RHYTHM</label>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 {[
                   { id: "early_bird", label: "EARLY_BIRD", time: "10:00 PM – 6:00 AM" },
@@ -219,22 +219,22 @@ export default function OnboardingPage() {
                     onClick={() => setSleepRhythm(item.id)}
                     className={`rounded-xl border-1.5 p-3.5 text-left transition ${
                       sleepRhythm === item.id
-                        ? "border-[#ccff00] bg-[#ccff00]/10 text-white shadow-[2px_2px_0px_#ccff00]"
-                        : "border-zinc-800 bg-[#09090b] text-zinc-400 hover:border-zinc-700"
+                        ? "border-phosphor bg-phosphor/10 text-white shadow-[2px_2px_0px_#ccff00]"
+                        : "border-tungsten-border bg-obsidian-sub text-steel-muted hover:border-tungsten-border"
                     }`}
                   >
                     <p className="font-bold uppercase text-xs">{item.label}</p>
-                    <p className="text-[10px] text-zinc-500 mt-0.5">{item.time}</p>
+                    <p className="text-[10px] text-steel-muted mt-0.5">{item.time}</p>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Cleanliness slider */}
-            <div className="space-y-2 rounded-xl border border-zinc-800 bg-[#09090b] p-4">
+            <div className="space-y-2 rounded-xl border border-tungsten-border bg-obsidian-sub p-4">
               <div className="flex items-center justify-between">
-                <label className="text-zinc-400 font-bold uppercase">CLEANLINESS_INDEX</label>
-                <span className="text-[#ccff00] font-black text-sm">{cleanlinessScore} / 10</span>
+                <label className="text-steel-muted font-bold uppercase">CLEANLINESS_INDEX</label>
+                <span className="text-phosphor font-black text-sm">{cleanlinessScore} / 10</span>
               </div>
               <input
                 type="range"
@@ -244,7 +244,7 @@ export default function OnboardingPage() {
                 onChange={(e) => setCleanlinessScore(Number(e.target.value))}
                 className="w-full accent-[#ccff00] cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-zinc-600">
+              <div className="flex justify-between text-[10px] text-steel-muted">
                 <span>RELAXED (1)</span>
                 <span>NEAT & ORGANIZED (5)</span>
                 <span>SURGICAL PRECISION (10)</span>
@@ -253,7 +253,7 @@ export default function OnboardingPage() {
 
             {/* Food preferences */}
             <div className="space-y-2">
-              <label className="text-zinc-400 font-bold uppercase">FOOD_FREQUENCY</label>
+              <label className="text-steel-muted font-bold uppercase">FOOD_FREQUENCY</label>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {[
                   { id: "veg_only", label: "STRICT_VEG" },
@@ -268,7 +268,7 @@ export default function OnboardingPage() {
                     className={`rounded-xl border-1.5 p-3 text-center font-bold transition ${
                       foodPreference === item.id
                         ? "border-[#3b82f6] bg-[#3b82f6]/10 text-white shadow-[2px_2px_0px_#3b82f6]"
-                        : "border-zinc-800 bg-[#09090b] text-zinc-400 hover:border-zinc-700"
+                        : "border-tungsten-border bg-obsidian-sub text-steel-muted hover:border-tungsten-border"
                     }`}
                   >
                     {item.label}
@@ -279,7 +279,7 @@ export default function OnboardingPage() {
 
             {/* Social battery */}
             <div className="space-y-2">
-              <label className="text-zinc-400 font-bold uppercase">SOCIAL_BATTERY_IN_SHARED_SPACE</label>
+              <label className="text-steel-muted font-bold uppercase">SOCIAL_BATTERY_IN_SHARED_SPACE</label>
               <div className="grid grid-cols-3 gap-3">
                 {[
                   { id: "introvert", label: "QUIET_SANCTUARY", desc: "Private space focus" },
@@ -293,11 +293,11 @@ export default function OnboardingPage() {
                     className={`rounded-xl border-1.5 p-3 text-left transition ${
                       socialBattery === item.id
                         ? "border-[#a855f7] bg-[#a855f7]/10 text-white shadow-[2px_2px_0px_#a855f7]"
-                        : "border-zinc-800 bg-[#09090b] text-zinc-400 hover:border-zinc-700"
+                        : "border-tungsten-border bg-obsidian-sub text-steel-muted hover:border-tungsten-border"
                     }`}
                   >
                     <p className="font-bold text-xs">{item.label}</p>
-                    <p className="text-[10px] text-zinc-500">{item.desc}</p>
+                    <p className="text-[10px] text-steel-muted">{item.desc}</p>
                   </button>
                 ))}
               </div>

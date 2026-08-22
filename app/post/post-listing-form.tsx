@@ -169,16 +169,16 @@ export default function PostListingForm() {
           </div>
         )}
 
-        <div className="bento-card p-6 border-1.5 border-zinc-800 space-y-4">
-          <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
-            <span className="sticker-pill border-[#ccff00] bg-[#ccff00]/10 text-[#ccff00]">
+        <div className="bento-card p-6 border-1.5 border-tungsten-border space-y-4">
+          <div className="flex items-center gap-2 border-b border-tungsten-border pb-3">
+            <span className="sticker-pill border-phosphor bg-phosphor/10 text-phosphor">
               SECTION_01
             </span>
             <h3 className="font-mono text-sm font-black uppercase text-white">SPACE_IDENTIFICATION</h3>
           </div>
 
           <div>
-            <label className="text-zinc-400 font-bold uppercase">LISTING_TITLE *</label>
+            <label className="text-steel-muted font-bold uppercase">LISTING_TITLE *</label>
             <input
               required
               value={form.title}
@@ -190,7 +190,7 @@ export default function PostListingForm() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="text-zinc-400 font-bold uppercase">METRO_CITY *</label>
+              <label className="text-steel-muted font-bold uppercase">METRO_CITY *</label>
               <select
                 value={form.city}
                 onChange={(e) => setForm({ ...form, city: e.target.value })}
@@ -206,7 +206,7 @@ export default function PostListingForm() {
             </div>
 
             <div>
-              <label className="text-zinc-400 font-bold uppercase">NEIGHBORHOOD_LOCALITY *</label>
+              <label className="text-steel-muted font-bold uppercase">NEIGHBORHOOD_LOCALITY *</label>
               <input
                 required
                 value={form.locality}
@@ -218,7 +218,7 @@ export default function PostListingForm() {
           </div>
 
           <div>
-            <label className="text-zinc-400 font-bold uppercase">ROOM_CONFIGURATION *</label>
+            <label className="text-steel-muted font-bold uppercase">ROOM_CONFIGURATION *</label>
             <div className="mt-2 grid grid-cols-3 gap-3">
               {[
                 { id: "single", label: "Single Room", desc: "Private Room" },
@@ -232,20 +232,20 @@ export default function PostListingForm() {
                   className={
                     "rounded-xl border-1.5 p-3 text-left transition " +
                     (form.room_type === opt.id
-                      ? "border-[#ccff00] bg-[#ccff00]/10 text-white shadow-[2px_2px_0px_#ccff00]"
-                      : "border-zinc-800 bg-[#18181f] text-zinc-400 hover:border-zinc-700")
+                      ? "border-phosphor bg-phosphor/10 text-white shadow-[2px_2px_0px_#ccff00]"
+                      : "border-tungsten-border bg-tungsten-card text-steel-muted hover:border-tungsten-border")
                   }
                 >
                   <p className="font-mono text-xs font-bold uppercase">{opt.label}</p>
-                  <p className="text-[10px] text-zinc-500">{opt.desc}</p>
+                  <p className="text-[10px] text-steel-muted">{opt.desc}</p>
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="bento-card p-6 border-1.5 border-zinc-800 space-y-4">
-          <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
+        <div className="bento-card p-6 border-1.5 border-tungsten-border space-y-4">
+          <div className="flex items-center gap-2 border-b border-tungsten-border pb-3">
             <span className="sticker-pill border-[#3b82f6] bg-[#3b82f6]/10 text-[#3b82f6]">
               SECTION_02
             </span>
@@ -254,7 +254,7 @@ export default function PostListingForm() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-              <label className="text-zinc-400 font-bold uppercase">MONTHLY_RENT (₹) *</label>
+              <label className="text-steel-muted font-bold uppercase">MONTHLY_RENT (₹) *</label>
               <input
                 required
                 type="number"
@@ -266,7 +266,7 @@ export default function PostListingForm() {
             </div>
 
             <div>
-              <label className="text-zinc-400 font-bold uppercase">SECURITY_DEPOSIT (₹)</label>
+              <label className="text-steel-muted font-bold uppercase">SECURITY_DEPOSIT (₹)</label>
               <input
                 type="number"
                 value={form.deposit}
@@ -277,7 +277,7 @@ export default function PostListingForm() {
             </div>
 
             <div>
-              <label className="text-zinc-400 font-bold uppercase">MOVE_IN_DATE</label>
+              <label className="text-steel-muted font-bold uppercase">MOVE_IN_DATE</label>
               <input
                 type="date"
                 value={form.available_from}
@@ -288,8 +288,8 @@ export default function PostListingForm() {
           </div>
         </div>
 
-        <div className="bento-card p-6 border-1.5 border-zinc-800 space-y-4">
-          <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
+        <div className="bento-card p-6 border-1.5 border-tungsten-border space-y-4">
+          <div className="flex items-center gap-2 border-b border-tungsten-border pb-3">
             <span className="sticker-pill border-[#a855f7] bg-[#a855f7]/10 text-[#a855f7]">
               SECTION_03
             </span>
@@ -297,7 +297,7 @@ export default function PostListingForm() {
           </div>
 
           <div>
-            <label className="text-zinc-400 font-bold uppercase mb-2 block">SELECT_INCLUDED_FACILITIES</label>
+            <label className="text-steel-muted font-bold uppercase mb-2 block">SELECT_INCLUDED_FACILITIES</label>
             <div className="flex flex-wrap gap-2">
               {AMENITY_OPTIONS.map((item) => {
                 const selected = form.amenities.includes(item);
@@ -309,8 +309,8 @@ export default function PostListingForm() {
                     className={
                       "rounded-lg border px-3 py-1.5 font-mono text-[11px] font-bold uppercase transition " +
                       (selected
-                        ? "border-[#ccff00] bg-[#ccff00] text-black shadow-[2px_2px_0px_#ffffff]"
-                        : "border-zinc-800 bg-[#18181f] text-zinc-400 hover:border-zinc-600 hover:text-white")
+                        ? "border-phosphor bg-phosphor text-black shadow-[2px_2px_0px_#ffffff]"
+                        : "border-tungsten-border bg-tungsten-card text-steel-muted hover:border-zinc-600 hover:text-white")
                     }
                   >
                     {selected ? " " : "+ "}
@@ -322,7 +322,7 @@ export default function PostListingForm() {
           </div>
 
           <div className="pt-2">
-            <label className="text-zinc-400 font-bold uppercase mb-2 block">COMMUNITY_VIBE_TAGS</label>
+            <label className="text-steel-muted font-bold uppercase mb-2 block">COMMUNITY_VIBE_TAGS</label>
             <div className="flex flex-wrap gap-2">
               {VIBE_TAG_OPTIONS.map((tag) => {
                 const selected = form.tags.includes(tag);
@@ -335,7 +335,7 @@ export default function PostListingForm() {
                       "rounded-lg border px-3 py-1.5 font-mono text-[11px] font-bold uppercase transition " +
                       (selected
                         ? "border-[#a855f7] bg-[#a855f7] text-white shadow-[2px_2px_0px_#ffffff]"
-                        : "border-zinc-800 bg-[#18181f] text-zinc-400 hover:border-zinc-600 hover:text-white")
+                        : "border-tungsten-border bg-tungsten-card text-steel-muted hover:border-zinc-600 hover:text-white")
                     }
                   >
                     {"#" + tag.replace(" ", "_")}
@@ -346,8 +346,8 @@ export default function PostListingForm() {
           </div>
         </div>
 
-        <div className="bento-card p-6 border-1.5 border-zinc-800 space-y-4">
-          <div className="flex items-center gap-2 border-b border-zinc-800 pb-3">
+        <div className="bento-card p-6 border-1.5 border-tungsten-border space-y-4">
+          <div className="flex items-center gap-2 border-b border-tungsten-border pb-3">
             <span className="sticker-pill border-[#ff5500] bg-[#ff5500]/10 text-[#ff5500]">
               SECTION_04
             </span>
@@ -372,7 +372,7 @@ export default function PostListingForm() {
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 pt-2">
             {form.photos.map((url, i) => (
-              <div key={url + i} className="group relative h-24 overflow-hidden rounded-xl border border-zinc-800 bg-black">
+              <div key={url + i} className="group relative h-24 overflow-hidden rounded-xl border border-tungsten-border bg-black">
                 <Image src={url} alt="upload preview" fill className="object-cover" />
                 <button
                   type="button"
@@ -398,11 +398,11 @@ export default function PostListingForm() {
       <aside className="lg:col-span-4 space-y-4">
         <div className="sticky top-24 space-y-4 font-mono text-xs">
           <div className="flex items-center gap-2">
-            <Eye className="h-4 w-4 text-[#ccff00]" />
+            <Eye className="h-4 w-4 text-phosphor" />
             <span className="font-bold text-white uppercase">[ LIVE_FEED_PREVIEW ]</span>
           </div>
 
-          <article className="bento-card overflow-hidden border-1.5 border-zinc-800 p-0">
+          <article className="bento-card overflow-hidden border-1.5 border-tungsten-border p-0">
             <div className="relative h-44 w-full bg-black">
               {form.photos[0] ? (
                 <Image src={form.photos[0]} alt="preview" fill className="object-cover" />
@@ -415,7 +415,7 @@ export default function PostListingForm() {
                 </span>
               </div>
               <div className="absolute bottom-2 left-2">
-                <span className="rounded-md bg-black/90 px-2 py-0.5 font-bold text-[#ccff00]">
+                <span className="rounded-md bg-black/90 px-2 py-0.5 font-bold text-phosphor">
                   ₹{form.rent || "0"}/mo
                 </span>
               </div>
@@ -425,14 +425,14 @@ export default function PostListingForm() {
               <h4 className="line-clamp-1 font-black uppercase text-white">
                 {form.title || "Untitled Space"}
               </h4>
-              <p className="flex items-center gap-1 text-[11px] text-zinc-400">
-                <MapPin className="h-3 w-3 text-[#ccff00]" />
+              <p className="flex items-center gap-1 text-[11px] text-steel-muted">
+                <MapPin className="h-3 w-3 text-phosphor" />
                 <span>{form.locality || "Locality"}, {form.city}</span>
               </p>
 
               <div className="flex flex-wrap gap-1 pt-1">
                 {form.tags.slice(0, 2).map((t) => (
-                  <span key={t} className="sticker-pill border-zinc-800 bg-zinc-900 text-zinc-400 text-[9px]">
+                  <span key={t} className="sticker-pill border-tungsten-border bg-zinc-900 text-steel-muted text-[9px]">
                     {"#" + t.replace(" ", "_")}
                   </span>
                 ))}

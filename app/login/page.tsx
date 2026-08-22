@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient, hasSupabaseEnv } from "@/lib/supabase";
-import { Lock, Mail, Zap } from "lucide-react";
+import { Lock, Mail, Shield } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -60,26 +60,26 @@ export default function LoginPage() {
 
   return (
     <main className="mx-auto flex min-h-[calc(100vh-140px)] max-w-md items-center px-4 py-12 sm:px-6 font-mono text-xs">
-      <div className="bento-card w-full p-8 border-1.5 border-zinc-800 shadow-[6px_6px_0px_#000]">
-        <div className="mb-6 space-y-2 text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#ccff00] text-black font-black shadow-[2px_2px_0px_#ffffff]">
-            <Lock className="h-6 w-6" />
+      <div className="bento-card reticle-border w-full p-8 space-y-6">
+        <div className="space-y-3 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-phosphor/10 border border-phosphor/30 text-phosphor">
+            <Shield className="h-7 w-7" />
           </div>
-          <h1 className="text-2xl font-black uppercase text-white">ACCESS_ACCOUNT</h1>
-          <p className="text-zinc-400 text-[11px]">Sign in to access your flatmate matches and saved spaces</p>
+          <h1 className="text-2xl font-black uppercase text-white tracking-tight">ACCESS_TERMINAL</h1>
+          <p className="text-steel-muted text-[11px]">Authenticate to access your flatmate matches and saved telemetry</p>
         </div>
 
         {errorMessage ? (
-          <div className="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-rose-300">
-            {errorMessage}
+          <div className="rounded-lg border border-crimson/30 bg-crimson/10 p-3 text-crimson font-mono text-xs">
+            [AUTH_ERROR] {errorMessage}
           </div>
         ) : null}
 
         <form className="space-y-4" onSubmit={onLogin}>
           <div>
-            <label className="text-zinc-400 font-bold uppercase block mb-1">EMAIL_ADDRESS</label>
+            <label className="text-steel-muted font-bold uppercase block mb-1.5">EMAIL_ADDRESS</label>
             <div className="relative">
-              <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-zinc-500" />
+              <Mail className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-steel-muted" />
               <input
                 name="email"
                 type="email"
@@ -91,13 +91,13 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="text-zinc-400 font-bold uppercase block mb-1">PASSWORD</label>
+            <label className="text-steel-muted font-bold uppercase block mb-1.5">PASSWORD</label>
             <div className="relative">
-              <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-zinc-500" />
+              <Lock className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-steel-muted" />
               <input
                 name="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder="Enter secure passphrase"
                 required
                 className="w-full neo-input pl-10 p-3"
               />
@@ -107,32 +107,32 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="neo-button w-full py-3.5 font-black uppercase tracking-wider"
+            className="neo-button w-full py-3.5 font-black uppercase tracking-wider text-xs"
           >
             {loading ? "AUTHENTICATING..." : "SIGN_IN_TO_NETWORK"}
           </button>
         </form>
 
-        <div className="relative my-6">
+        <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-zinc-800" />
+            <div className="w-full border-t border-tungsten-border" />
           </div>
           <div className="relative flex justify-center text-[10px] uppercase">
-            <span className="bg-[#121217] px-2 text-zinc-500 font-bold">OR_AUTHENTICATE_WITH</span>
+            <span className="bg-tungsten px-3 text-steel-muted font-bold">OR_AUTHENTICATE_VIA</span>
           </div>
         </div>
 
         <button
           type="button"
           onClick={onGoogle}
-          className="neo-button-secondary flex w-full items-center justify-center gap-2 py-3 font-bold"
+          className="neo-button-secondary flex w-full items-center justify-center gap-2 py-3 font-bold text-xs"
         >
-          <span>Continue with Google</span>
+          <span>CONTINUE_WITH_GOOGLE</span>
         </button>
 
-        <p className="mt-6 text-center text-zinc-400">
-          DON&apos;T HAVE AN ACCOUNT?{" "}
-          <Link href="/signup" className="font-bold text-[#ccff00] hover:underline">
+        <p className="text-center text-steel-muted">
+          NO_ACCOUNT?{" "}
+          <Link href="/signup" className="font-bold text-phosphor hover:underline">
             [ CREATE_ACCOUNT ]
           </Link>
         </p>
@@ -140,5 +140,3 @@ export default function LoginPage() {
     </main>
   );
 }
-
-
