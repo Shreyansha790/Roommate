@@ -3,9 +3,11 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { CompatibilityBadge } from "@/components/CompatibilityBadge";
 import { BookmarkButton } from "./bookmark-button";
 import { VectorFilterChips } from "@/components/search/VectorFilterChips";
+import { Card3D } from "@/components/motion/Card3D";
 import {
   Search,
   MapPin,
@@ -98,7 +100,7 @@ export function BrowseClientView({
                 value={nlpQuery}
                 onChange={(e) => setNlpQuery(e.target.value)}
                 placeholder="AI Search (e.g. Indiranagar under 25k vegan)"
-                className="w-full neo-input pl-10 pr-12 py-2.5 text-xs text-stone-800 placeholder-stone-400"
+                className="w-full neo-input pl-10 pr-12 py-2.5 text-xs text-stone-800 placeholder-stone-400 shadow-sm"
               />
               {nlpQuery && (
                 <button
@@ -220,92 +222,103 @@ export function BrowseClientView({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredListings.map((listing: any, idx: number) => {
-                const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
-                const photo = listing.photos?.[0] || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80";
-                const matchScore = listing.matchScore ?? (88 + ((idx * 4) % 10));
+            <motion.div
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              <AnimatePresence>
+                {filteredListings.map((listing: any, idx: number) => {
+                  const profile = Array.isArray(listing.profiles) ? listing.profiles[0] : listing.profiles;
+                  const photo = listing.photos?.[0] || "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80";
+                  const matchScore = listing.matchScore ?? (88 + ((idx * 4) % 10));
 
-                return (
-                  <article
-                    key={listing.id}
-                    className="bento-card-interactive group overflow-hidden p-0 flex flex-col justify-between"
-                  >
-                    <div className="relative h-48 w-full overflow-hidden bg-stone-100">
-                      <Image
-                        src={photo}
-                        alt={listing.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover transition duration-300 group-hover:scale-105"
-                      />
-                      <div className="absolute top-3 left-3">
-                        <span className="bg-white/90 backdrop-blur-md text-stone-800 font-bold text-[10px] px-2.5 py-1 rounded-full shadow-sm">
-                          {listing.room_type?.replace("_", " ").toUpperCase() || "ROOM"}
-                        </span>
-                      </div>
-                      <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                        <CompatibilityBadge score={matchScore} />
-                        <BookmarkButton listingId={listing.id} userId={userId} />
-                      </div>
-                      <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
-                        <div className="rounded-xl bg-white/95 backdrop-blur-md px-3 py-1 shadow-sm border border-stone-200">
-                          <span className="font-extrabold text-sm text-stone-900">₹{Number(listing.rent).toLocaleString()}</span>
-                          <span className="text-[10px] text-stone-500 font-medium">/mo</span>
+                  return (
+                    <motion.div
+                      key={listing.id}
+                      layout
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Card3D depth={8} glareOpacity={0.15} className="bento-card p-0 flex flex-col justify-between">
+                        <div className="relative h-48 w-full overflow-hidden bg-stone-100">
+                          <Image
+                            src={photo}
+                            alt={listing.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-cover transition duration-500 hover:scale-105"
+                          />
+                          <div className="absolute top-3 left-3">
+                            <span className="bg-white/90 backdrop-blur-md text-stone-800 font-bold text-[10px] px-2.5 py-1 rounded-full shadow-sm">
+                              {listing.room_type?.replace("_", " ").toUpperCase() || "ROOM"}
+                            </span>
+                          </div>
+                          <div className="absolute top-3 right-3 flex items-center gap-1.5">
+                            <CompatibilityBadge score={matchScore} />
+                            <BookmarkButton listingId={listing.id} userId={userId} />
+                          </div>
+                          <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                            <div className="rounded-xl bg-white/95 backdrop-blur-md px-3 py-1 shadow-sm border border-stone-200">
+                              <span className="font-extrabold text-sm text-stone-900">₹{Number(listing.rent).toLocaleString()}</span>
+                              <span className="text-[10px] text-stone-500 font-medium">/mo</span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
 
-                    <div className="p-4 space-y-3">
-                      <div>
-                        <Link href={`/listings/${listing.id}`} className="hover:text-coral-600 transition">
-                          <h3 className="line-clamp-1 text-sm font-bold text-stone-900">
-                            {listing.title}
-                          </h3>
-                        </Link>
-                        <p className="mt-1 flex items-center gap-1 text-xs text-stone-500 font-medium">
-                          <MapPin className="h-3.5 w-3.5 text-coral-500 shrink-0" />
-                          <span>{listing.locality}, {listing.city}</span>
-                        </p>
-                      </div>
+                        <div className="p-4 space-y-3">
+                          <div>
+                            <Link href={`/listings/${listing.id}`} className="hover:text-coral-600 transition">
+                              <h3 className="line-clamp-1 text-sm font-bold text-stone-900">
+                                {listing.title}
+                              </h3>
+                            </Link>
+                            <p className="mt-1 flex items-center gap-1 text-xs text-stone-500 font-medium">
+                              <MapPin className="h-3.5 w-3.5 text-coral-500 shrink-0" />
+                              <span>{listing.locality}, {listing.city}</span>
+                            </p>
+                          </div>
 
-                      {profile && (
-                        <div className="flex items-center gap-2.5 rounded-xl border border-stone-100 bg-[#faf9f6] p-2">
-                          {profile.avatar_url ? (
-                            <Image
-                              src={profile.avatar_url}
-                              alt={profile.full_name || "Host"}
-                              width={24}
-                              height={24}
-                              className="h-6 w-6 rounded-full object-cover border border-stone-200"
-                            />
-                          ) : (
-                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-coral-100 text-[10px] font-bold text-coral-600">
-                              {profile.full_name?.[0] || "H"}
+                          {profile && (
+                            <div className="flex items-center gap-2.5 rounded-xl border border-stone-100 bg-[#faf9f6] p-2">
+                              {profile.avatar_url ? (
+                                <Image
+                                  src={profile.avatar_url}
+                                  alt={profile.full_name || "Host"}
+                                  width={24}
+                                  height={24}
+                                  className="h-6 w-6 rounded-full object-cover border border-stone-200"
+                                />
+                              ) : (
+                                <div className="flex h-6 w-6 items-center justify-center rounded-full bg-coral-100 text-[10px] font-bold text-coral-600">
+                                  {profile.full_name?.[0] || "H"}
+                                </div>
+                              )}
+                              <p className="truncate text-xs font-semibold text-stone-800">{profile.full_name}</p>
+                              {profile.is_verified && (
+                                <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0 ml-auto" />
+                              )}
                             </div>
                           )}
-                          <p className="truncate text-xs font-semibold text-stone-800">{profile.full_name}</p>
-                          {profile.is_verified && (
-                            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 shrink-0 ml-auto" />
-                          )}
-                        </div>
-                      )}
 
-                      <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
-                        <span>{listing.available_from || "Immediate"}</span>
-                        <Link
-                          href={`/listings/${listing.id}`}
-                          className="font-bold text-coral-600 hover:text-coral-700 inline-flex items-center gap-1"
-                        >
-                          <span>View</span>
-                          <ArrowRight className="h-3 w-3" />
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                          <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                            <span>{listing.available_from || "Immediate"}</span>
+                            <Link
+                              href={`/listings/${listing.id}`}
+                              className="font-bold text-coral-600 hover:text-coral-700 inline-flex items-center gap-1"
+                            >
+                              <span>View</span>
+                              <ArrowRight className="h-3 w-3" />
+                            </Link>
+                          </div>
+                        </div>
+                      </Card3D>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </motion.div>
           )}
         </div>
       </div>
