@@ -1,141 +1,103 @@
 import type { Config } from "tailwindcss";
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
-    "./app/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
-    "./lib/**/*.{ts,tsx}"
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        border: "#e4e4e7",
-        input: "#e4e4e7",
-        ring: "#e05d44",
-        background: "#faf9f6",
-        foreground: "#18181b",
-        
         cream: {
-          DEFAULT: "#faf9f6",
-          50: "#ffffff",
-          100: "#faf9f6",
-          200: "#f4f2eb",
-          300: "#ebe8df",
-          400: "#dedad0",
-          500: "#c4beaf"
+          50: "#faf9f6",
+          100: "#f5f4ef",
+          200: "#ebe8df",
+          300: "#ded9cc",
+          400: "#ccc4b2",
+          500: "#b8ad96"
         },
         coral: {
-          DEFAULT: "#e05d44",
-          hover: "#cc4f37",
           50: "#fff5f3",
-          100: "#ffe9e4",
-          200: "#ffd5cc",
-          300: "#fcae9f",
-          400: "#f4826b",
+          100: "#ffe8e4",
+          200: "#ffd5cd",
+          300: "#ffb4a6",
+          400: "#f88570",
           500: "#e05d44",
           600: "#cc4f37",
-          700: "#ab3e29"
+          700: "#a93e2a",
+          800: "#8b3526",
+          900: "#733024"
         },
         sage: {
-          DEFAULT: "#059669",
-          50: "#f0fdf4",
-          100: "#dcfce7",
-          200: "#bbf7d0",
-          500: "#10b981",
-          600: "#059669",
-          700: "#047857"
+          50: "#f2f8f5",
+          100: "#e1efe8",
+          200: "#c5e0d4",
+          300: "#9dc9b7",
+          400: "#6eab94",
+          500: "#498e77",
+          600: "#36725f",
+          700: "#2c5c4d",
+          800: "#264a3f",
+          900: "#213e35"
         },
         amber: {
-          DEFAULT: "#d97706",
-          50: "#fffbeb",
-          100: "#fef3c7",
-          200: "#fde68a",
-          500: "#f59e0b",
-          600: "#d97706"
+          50: "#fdf8ee",
+          100: "#faeed6",
+          200: "#f4dbac",
+          300: "#ecc278",
+          400: "#e2a445",
+          500: "#d97706",
+          600: "#b45309",
+          700: "#8f3b0c",
+          800: "#752f10",
+          900: "#612711"
         },
-        ink: {
-          DEFAULT: "#18181b",
-          secondary: "#3f3f46",
-          muted: "#71717a",
-          light: "#a1a1aa",
-          border: "#e4e4e7",
-          card: "#ffffff"
-        },
-        
-        // Fallback tokens cleanly remapped to Light Mode
-        obsidian: {
-          DEFAULT: "#faf9f6",
-          sub: "#f4f2eb",
-          card: "#ffffff",
-          border: "#e4e4e7"
-        },
-        tungsten: {
-          DEFAULT: "#faf9f6",
-          card: "#ffffff",
-          panel: "#f4f2eb",
-          border: "#e4e4e7",
-          muted: "#71717a"
-        },
-        phosphor: {
-          DEFAULT: "#e05d44",
-          dim: "#cc4f37",
-          glow: "rgba(224, 93, 68, 0.15)",
-          dark: "#fff1ee"
-        },
-        solar: {
-          DEFAULT: "#d97706",
-          dim: "#b45309",
-          glow: "rgba(217, 119, 6, 0.15)",
-          dark: "#fef3c7"
-        },
-        cyan: {
-          DEFAULT: "#0284c7",
-          dim: "#0369a1",
-          glow: "rgba(2, 132, 199, 0.15)",
-          dark: "#e0f2fe"
-        },
-        violet: {
-          DEFAULT: "#7c3aed",
-          dim: "#6d28d9"
-        },
-        crimson: {
-          DEFAULT: "#e11d48",
-          dim: "#be123c"
-        },
-        steel: {
-          DEFAULT: "#52525b",
-          muted: "#71717a"
+        stone: {
+          50: "#fafaf9",
+          100: "#f5f5f4",
+          200: "#e7e5e4",
+          300: "#d6d3d1",
+          400: "#a8a29e",
+          500: "#78716c",
+          600: "#57534e",
+          700: "#44403c",
+          800: "#292524",
+          900: "#1c1917",
+          950: "#0c0a09"
         }
       },
       fontFamily: {
         sans: [
-          "Inter",
+          "var(--font-sans)",
           "-apple-system",
           "BlinkMacSystemFont",
-          "Segoe UI",
+          '"Segoe UI"',
           "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
           "sans-serif"
         ],
-        mono: [
-          "ui-monospace",
-          "SFMono-Regular",
-          "Menlo",
-          "Monaco",
-          "Consolas",
-          "monospace"
+        serif: [
+          '"Newsreader"',
+          '"Playfair Display"',
+          "Georgia",
+          "Cambria",
+          "serif"
         ]
       },
       boxShadow: {
-        "warm-sm": "0 1px 2px 0 rgba(0, 0, 0, 0.04)",
-        "warm": "0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03)",
-        "warm-md": "0 6px 20px -2px rgba(24, 24, 27, 0.07), 0 2px 6px -1px rgba(24, 24, 27, 0.04)",
-        "warm-lg": "0 12px 32px -4px rgba(24, 24, 27, 0.09), 0 4px 12px -2px rgba(24, 24, 27, 0.05)",
-        "warm-coral": "0 8px 20px -3px rgba(224, 93, 68, 0.25)"
+        "luxury-sm": "0 2px 8px -2px rgba(0, 0, 0, 0.04), 0 1px 4px -1px rgba(0, 0, 0, 0.02)",
+        "luxury": "0 8px 30px -4px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03)",
+        "luxury-lg": "0 20px 48px -8px rgba(0, 0, 0, 0.07), 0 8px 20px -4px rgba(0, 0, 0, 0.04)",
+        "luxury-coral": "0 12px 36px -4px rgba(224, 93, 68, 0.22), 0 4px 12px -2px rgba(224, 93, 68, 0.12)",
+        "glass": "0 8px 32px 0 rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.6)"
       }
     }
   },
   plugins: [require("tailwindcss-animate")]
-} satisfies Config;
+};
 
 export default config;

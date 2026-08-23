@@ -4,124 +4,123 @@
 
 @layer base {
   :root {
-    --background: 40 33% 98%;
-    --foreground: 240 10% 10%;
-    --primary: 11 74% 57%;
+    --background: 40 20% 98%;
+    --foreground: 24 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 24 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 10% 10%;
+    --primary: 10 74% 57%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 20% 95%;
-    --secondary-foreground: 240 10% 10%;
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --ring: 11 74% 57%;
+    --secondary: 40 10% 94%;
+    --secondary-foreground: 24 10% 15%;
+    --muted: 40 10% 92%;
+    --muted-foreground: 24 5% 45%;
+    --accent: 156 42% 42%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 8% 90%;
+    --input: 30 8% 90%;
+    --ring: 10 74% 57%;
+    --radius: 1rem;
+  }
+
+  * {
+    @apply border-stone-200;
   }
 
   body {
-    @apply min-h-screen bg-cream text-zinc-900 antialiased selection:bg-coral-100 selection:text-coral-700;
     background-color: #faf9f6;
+    color: #1c1917;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
   }
 }
 
-/* Custom Soft Scrollbar */
+/* Luxury Editorial & Glass Utilities */
+.glass-capsule {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(228, 228, 231, 0.8);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.luxury-card {
+  background: #ffffff;
+  border: 1px solid #eae8e1;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  border-radius: 1.25rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-card:hover {
+  border-color: #ded9cc;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.06), 0 6px 14px -2px rgba(0, 0, 0, 0.03);
+}
+
+.neo-input {
+  background-color: #ffffff;
+  border: 1px solid #e7e5e4;
+  border-radius: 0.875rem;
+  color: #1c1917;
+  transition: all 0.2s ease;
+}
+
+.neo-input:focus {
+  outline: none;
+  border-color: #e05d44;
+  box-shadow: 0 0 0 3px rgba(224, 93, 68, 0.12);
+}
+
+.neo-button {
+  background: #e05d44;
+  color: #ffffff;
+  border-radius: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-button:hover {
+  background: #cc4f37;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -4px rgba(224, 93, 68, 0.3);
+}
+
+.neo-button:active {
+  transform: translateY(0);
+}
+
+.neo-button-secondary {
+  background-color: #ffffff;
+  color: #292524;
+  border: 1px solid #e7e5e4;
+  border-radius: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.neo-button-secondary:hover {
+  background-color: #f5f5f4;
+  border-color: #d6d3d1;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: #faf9f6;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d8;
-  border-radius: 9999px;
+  background: #d6d3d1;
+  border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1aa;
-}
-
-/* Warm Editorial Card Styles */
-.bento-card {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.bento-card-interactive {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.05), 0 1px 3px -1px rgba(0, 0, 0, 0.03);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.bento-card-interactive:hover {
-  transform: translateY(-2px);
-  border-color: #ffd5cc;
-  box-shadow: 0 8px 24px -4px rgba(224, 93, 68, 0.12), 0 4px 12px -2px rgba(24, 24, 27, 0.04);
-}
-
-.chamfer-card, .chamfer-card-interactive, .tech-tile {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 1rem;
-  box-shadow: 0 2px 8px -1px rgba(0, 0, 0, 0.05);
-}
-
-/* Inputs & Form Controls */
-.neo-input {
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  color: #18181b;
-  border-radius: 0.75rem;
-  transition: all 0.15s ease;
-}
-.neo-input:focus {
-  border-color: #e05d44;
-  box-shadow: 0 0 0 3px rgba(224, 93, 68, 0.15);
-  outline: none;
-  background: #ffffff;
-}
-
-/* Primary Warm CTA Button */
-.neo-button {
-  background: #e05d44;
-  color: #ffffff;
-  font-weight: 700;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 12px rgba(224, 93, 68, 0.25);
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.neo-button:hover {
-  background: #cc4f37;
-  box-shadow: 0 6px 18px rgba(224, 93, 68, 0.35);
-  transform: translateY(-1px);
-}
-.neo-button:active {
-  transform: translateY(0px);
-}
-
-/* Secondary Button */
-.neo-button-secondary {
-  background: #ffffff;
-  color: #27272a;
-  font-weight: 600;
-  border: 1px solid #e4e4e7;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: all 0.15s ease;
-}
-.neo-button-secondary:hover {
-  border-color: #d4d4d8;
-  background: #faf9f6;
-  color: #18181b;
-  transform: translateY(-1px);
-}
-
-/* Sticker / Pill Badges */
-.sticker-pill {
-  font-size: 0.75rem;
-  letter-spacing: 0.025em;
-  font-weight: 600;
-  padding: 0.25rem 0.65rem;
-  border-radius: 9999px;
-  border: 1px solid currentColor;
+  background: #a8a29e;
 }
