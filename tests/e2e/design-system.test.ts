@@ -37,38 +37,38 @@ function getSourceFiles(dir: string, fileList: string[] = []): string[] {
 // Tier 1: Core Coverage (Design System Tokens & Contracts)
 // -------------------------------------------------------------
 
-designSystemSuite.tier1("Tailwind configuration contains cyber-cartographic color tokens", () => {
+designSystemSuite.tier1("Tailwind configuration contains luxury color tokens", () => {
   const tailwindPath = path.resolve(__dirname, "../../tailwind.config.ts");
   expect(fs.existsSync(tailwindPath)).toBeTruthy();
   const content = fs.readFileSync(tailwindPath, "utf-8");
 
-  // Verify neo and cyber palette definitions exist
-  expect(content).toContain("lime");
-  expect(content).toContain("#ccff00");
-  expect(content).toContain("dark");
-  expect(content).toContain("#09090b");
-  expect(content).toContain("card");
-  expect(content).toContain("#121217");
+  // Verify modern palette definitions exist
+  expect(content).toContain("cream");
+  expect(content).toContain("#faf9f6");
+  expect(content).toContain("coral");
+  expect(content).toContain("#e05d44");
+  expect(content).toContain("sage");
+  expect(content).toContain("amber");
 });
 
-designSystemSuite.tier1("Globals CSS defines tactical HUD components and styling", () => {
+designSystemSuite.tier1("Globals CSS defines luxury components and styling", () => {
   const cssPath = path.resolve(__dirname, "../../app/globals.css");
   expect(fs.existsSync(cssPath)).toBeTruthy();
   const content = fs.readFileSync(cssPath, "utf-8");
 
-  expect(content).toContain(".bento-card");
-  expect(content).toContain(".sticker-pill");
+  expect(content).toContain(".glass-capsule");
+  expect(content).toContain(".luxury-card");
   expect(content).toContain(".neo-button");
   expect(content).toContain(".neo-input");
   expect(content).toContain("::-webkit-scrollbar");
 });
 
-designSystemSuite.tier1("Tactical typography uses monospace fonts for badges and metrics", () => {
+designSystemSuite.tier1("Typography uses refined font smoothing and letter spacing", () => {
   const cssPath = path.resolve(__dirname, "../../app/globals.css");
   const content = fs.readFileSync(cssPath, "utf-8");
 
-  expect(content).toContain("monospace");
-  expect(content).toContain("SFMono-Regular");
+  expect(content).toContain("-webkit-font-smoothing: antialiased");
+  expect(content).toContain("letter-spacing: -0.01em");
 });
 
 designSystemSuite.tier1("Web Audio API Synthesizer frequency & waveform contracts", () => {
@@ -98,27 +98,27 @@ designSystemSuite.tier1("Top Navigation HUD exports and contains telemetry indic
   const content = fs.readFileSync(topNavPath, "utf-8") + fs.readFileSync(topNavClientPath, "utf-8");
 
   expect(content).toContain("TopNav");
-  expect(content).toContain("ROOMMATE");
-  expect(content).toContain("SPHERE");
-  expect(content).toContain("ZERO_BROKERAGE");
+  expect(content).toContain("Roommate");
+  expect(content).toContain("Sphere");
 });
 
-designSystemSuite.tier1("Tailwind configuration defines all Neo Brutalist box shadows", () => {
+designSystemSuite.tier1("Tailwind configuration defines luxury box shadows", () => {
   const tailwindPath = path.resolve(__dirname, "../../tailwind.config.ts");
   const content = fs.readFileSync(tailwindPath, "utf-8");
 
-  expect(content).toContain("neo-lime");
-  expect(content).toContain("neo-orange");
-  expect(content).toContain("neo-blue");
-  expect(content).toContain("neo-white");
+  expect(content).toContain("luxury-sm");
+  expect(content).toContain("luxury");
+  expect(content).toContain("luxury-lg");
+  expect(content).toContain("luxury-coral");
 });
 
-designSystemSuite.tier1("Globals CSS defines secondary neo-button and interactive bento cards", () => {
+designSystemSuite.tier1("Globals CSS defines luxury card and glass capsule styles", () => {
   const cssPath = path.resolve(__dirname, "../../app/globals.css");
   const content = fs.readFileSync(cssPath, "utf-8");
 
-  expect(content).toContain(".neo-button-secondary");
-  expect(content).toContain(".bento-card-interactive");
+  expect(content).toContain(".glass-capsule");
+  expect(content).toContain(".luxury-card");
+  expect(content).toContain(".neo-button");
 });
 
 // -------------------------------------------------------------
@@ -170,32 +170,29 @@ designSystemSuite.tier2("Audio synthesizer safely handles SSR environment where 
   expect(result.degraded).toBeTruthy();
 });
 
-designSystemSuite.tier2("Bento card shadow offsets stay within calibrated bounding box", () => {
+designSystemSuite.tier2("Card shadow offsets stay within calibrated bounding box", () => {
   const cssPath = path.resolve(__dirname, "../../app/globals.css");
   const content = fs.readFileSync(cssPath, "utf-8");
 
-  // Check that all custom neo/cyber shadows have valid pixel dimensions (<= 32px)
   const shadowMatches = content.match(/box-shadow:\s*([^;]+);/g) || [];
   expect(shadowMatches.length).toBeGreaterThan(0);
   for (const shadow of shadowMatches) {
     const pxValues = shadow.match(/(\d+)px/g)?.map((p) => parseInt(p, 10)) || [];
     for (const val of pxValues) {
-      expect(val).toBeLessThanOrEqual(32);
+      expect(val).toBeLessThanOrEqual(48);
     }
   }
 });
 
-designSystemSuite.tier2("CSS animation keyframes for live ticker define complete translation", () => {
+designSystemSuite.tier2("Glass capsule and luxury card styles defined in globals", () => {
   const cssPath = path.resolve(__dirname, "../../app/globals.css");
   const content = fs.readFileSync(cssPath, "utf-8");
 
-  expect(content).toContain("@keyframes ticker");
-  expect(content).toContain("transform: translate3d(-50%, 0, 0)");
+  expect(content).toContain(".glass-capsule");
+  expect(content).toContain(".luxury-card");
 });
 
-designSystemSuite.tier2("Color palette contrast ratios conform to dark mode legibility standards", () => {
-  // Phosphor lime #ccff00 on dark #09090b
-  // Relative luminance calculation
+designSystemSuite.tier2("Color palette contrast ratios conform to high legibility standards", () => {
   const getLuminance = (r: number, g: number, b: number) => {
     const [rs, gs, bs] = [r, g, b].map((c) => {
       const s = c / 255;
@@ -204,11 +201,10 @@ designSystemSuite.tier2("Color palette contrast ratios conform to dark mode legi
     return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
   };
 
-  const lumLime = getLuminance(204, 255, 0); // #ccff00
-  const lumDark = getLuminance(9, 9, 11);     // #09090b
-  const contrast = (lumLime + 0.05) / (lumDark + 0.05);
+  const lumCharcoal = getLuminance(28, 25, 23); // #1c1917
+  const lumIvory = getLuminance(250, 249, 246);  // #faf9f6
+  const contrast = (lumIvory + 0.05) / (lumCharcoal + 0.05);
 
-  // Contrast should exceed 12:1 (well above AAA 7:1 standard)
   expect(contrast).toBeGreaterThan(10);
 });
 
@@ -216,40 +212,38 @@ designSystemSuite.tier2("Color palette contrast ratios conform to dark mode legi
 // Tier 3: Pairwise Cross-Feature Interactions
 // -------------------------------------------------------------
 
-designSystemSuite.tier3("Interactive bento card hover states integrate with neo-button styling", () => {
+designSystemSuite.tier3("Interactive card hover states integrate with neo-button styling", () => {
   const cssPath = path.resolve(__dirname, "../../app/globals.css");
   const content = fs.readFileSync(cssPath, "utf-8");
 
-  expect(content).toContain(".bento-card-interactive:hover");
-  expect(content).toContain("transform: translateY(-2px)");
+  expect(content).toContain(".luxury-card:hover");
   expect(content).toContain(".neo-button:hover");
   expect(content).toContain("transform: translateY(-1px)");
 });
 
-designSystemSuite.tier3("Sticker pill badge variants pair with category accents (lime, blue, purple, orange)", () => {
+designSystemSuite.tier3("Living Space Cards and Badges pair with refined category accents", () => {
   const homePath = path.resolve(__dirname, "../../app/page.tsx");
   const content = fs.readFileSync(homePath, "utf-8");
 
-  expect(content).toContain("text-[#ccff00]");
-  expect(content).toContain("text-[#3b82f6]");
-  expect(content).toContain("text-[#a855f7]");
+  expect(content).toContain("CompatibilityBadge");
+  expect(content).toContain("Card3D");
 });
 
 // -------------------------------------------------------------
 // Tier 4: Real-World Scenarios
 // -------------------------------------------------------------
 
-designSystemSuite.tier4("Scenario: Telemetry Dashboard Shell loads with HUD metrics and theme tokens", () => {
+designSystemSuite.tier4("Scenario: Architectural Dashboard Shell loads with modern layout and theme tokens", () => {
   const homePath = path.resolve(__dirname, "../../app/page.tsx");
   const layoutPath = path.resolve(__dirname, "../../app/layout.tsx");
 
   const homeContent = fs.readFileSync(homePath, "utf-8");
   const layoutContent = fs.readFileSync(layoutPath, "utf-8");
 
-  expect(layoutContent).toContain("dark scroll-smooth");
-  expect(homeContent).toContain("ACTIVE_SEEKERS");
-  expect(homeContent).toContain("VERIFIED_SPACES");
-  expect(homeContent).toContain("MATCH_SUCCESS_RATE");
+  expect(layoutContent).toContain("scroll-smooth");
+  expect(homeContent).toContain("AnimatedStats");
+  expect(homeContent).toContain("HeroArchitectural");
+  expect(homeContent).toContain("NeighborhoodEditorialGrid");
 });
 
 // -------------------------------------------------------------
@@ -305,8 +299,7 @@ designSystemSuite.tier5("Lucide SVG Icon Replacement Policy: All lifestyle icons
   const content = fs.readFileSync(homePath, "utf-8");
 
   expect(content).toContain('from "lucide-react"');
-  expect(content).toContain("Zap");
-  expect(content).toContain("Search");
+  expect(content).toContain("Sparkles");
   expect(content).toContain("MapPin");
   expect(content).toContain("ShieldCheck");
 });

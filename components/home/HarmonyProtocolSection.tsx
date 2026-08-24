@@ -83,6 +83,16 @@ export function HarmonyProtocolSection() {
             );
           })}
         </div>
+
+        <div className="text-center pt-2">
+          <a
+            href="/onboarding"
+            className="neo-button inline-flex items-center gap-2 px-6 py-3 text-xs font-bold shadow-luxury-coral"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>Calibrate Your Vibe DNA Questionnaire (60 Seconds)</span>
+          </a>
+        </div>
       </div>
     </section>
   );

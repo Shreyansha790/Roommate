@@ -27,15 +27,15 @@ export const routesIntegritySuite = createTestSuite("App Router Routes & Structu
 // Tier 1: Core Coverage (All 8 Routes Verification)
 // -------------------------------------------------------------
 
-routesIntegritySuite.tier1("Route 1: Root Home page ('/') exists and contains telemetry hero", () => {
+routesIntegritySuite.tier1("Route 1: Root Home page ('/') exists and contains architectural hero", () => {
   const pagePath = path.resolve(__dirname, "../../app/page.tsx");
   expect(fs.existsSync(pagePath)).toBeTruthy();
   const content = fs.readFileSync(pagePath, "utf-8");
 
   expect(content).toContain("export default");
-  expect(content).toContain("SYSTEM_V2.0");
-  expect(content).toContain("ZERO_BROKERAGE");
-  expect(content).toContain("EXECUTE_SEARCH");
+  expect(content).toContain("HeroArchitectural");
+  expect(content).toContain("HarmonyProtocolSection");
+  expect(content).toContain("AnimatedStats");
 });
 
 routesIntegritySuite.tier1("Route 2: Browse directory page ('/browse') exists and handles search params", () => {

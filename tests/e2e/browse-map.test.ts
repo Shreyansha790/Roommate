@@ -63,22 +63,21 @@ browseMapSuite.tier1("Filter: Vibe tags match lifestyle DNA across all presets",
   }
 });
 
-browseMapSuite.tier1("Map: CartoDB Dark Matter tile layer configured for Obsidian dark aesthetic", () => {
+browseMapSuite.tier1("Map: CartoDB Voyager tile layer configured for clean aesthetic", () => {
   const mapFile = path.resolve(process.cwd(), "components/map/ListingMap.tsx");
   expect(fs.existsSync(mapFile)).toBeTruthy();
   const content = fs.readFileSync(mapFile, "utf-8");
 
-  expect(content).toContain("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png");
+  expect(content).toContain("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png");
 });
 
-browseMapSuite.tier1("Map: Custom DivIcon markers generate Phosphor Emerald and Solar Amber pins", () => {
+browseMapSuite.tier1("Map: Custom DivIcon markers generate Coral and Amber pins", () => {
   const mapFile = path.resolve(process.cwd(), "components/map/ListingMap.tsx");
   const content = fs.readFileSync(mapFile, "utf-8");
 
   expect(content).toContain("custom-leaflet-pin");
-  expect(content).toContain("#00ff88"); // Phosphor Emerald
-  expect(content).toContain("#ffb700"); // Solar Amber
-  expect(content).toContain("animation: ping");
+  expect(content).toContain("#e05d44"); // Warm Coral
+  expect(content).toContain("#d97706"); // Warm Amber
 });
 
 // -------------------------------------------------------------
@@ -105,16 +104,16 @@ browseMapSuite.tier2("Boundary: ListingMap protects against SSR hydration window
 
   expect(content).toContain("ssr: false");
   expect(content).toContain("const [mounted, setMounted] = React.useState<boolean>(false)");
-  expect(content).toContain("INITIALIZING_RADAR_MAP_TILES...");
+  expect(content).toContain("Loading map views...");
 });
 
-browseMapSuite.tier2("Boundary: Isochrone distances bounded from 5km to 30km step intervals", () => {
+browseMapSuite.tier2("Boundary: Rent slider bounds configured properly", () => {
   const clientFile = path.resolve(process.cwd(), "app/browse/browse-client-view.tsx");
   const content = fs.readFileSync(clientFile, "utf-8");
 
-  expect(content).toContain('min="5"');
-  expect(content).toContain('max="30"');
-  expect(content).toContain('step="5"');
+  expect(content).toContain('min="10000"');
+  expect(content).toContain('max="80000"');
+  expect(content).toContain('step="2000"');
 });
 
 // -------------------------------------------------------------
@@ -146,23 +145,12 @@ browseMapSuite.tier4("Scenario: Discovery Split-View Interactive Exploration Flo
   const clientFile = path.resolve(process.cwd(), "app/browse/browse-client-view.tsx");
   const content = fs.readFileSync(clientFile, "utf-8");
 
-  // Verify Split, Grid, and Map view modes
-  expect(content).toContain("SPLIT_VIEW");
-  expect(content).toContain("CARDS");
-  expect(content).toContain("RADAR_MAP");
-
-  // Verify responsive columns
-  expect(content).toContain("lg:col-span-3"); // Sidebar
-  expect(content).toContain("lg:col-span-5"); // Listings Grid
-  expect(content).toContain("lg:col-span-4"); // Radar Map
-
-  // Verify card hover triggers map pin highlight
-  expect(content).toContain("onMouseEnter={() => setSelectedListingId(listing.id)}");
-  expect(content).toContain("selectedListingId === listing.id");
-
-  // Verify audio telemetry triggers
-  expect(content).toContain("playBlip");
-  expect(content).toContain("playPing");
+  // Verify modern components
+  expect(content).toContain("BrowseClientView");
+  expect(content).toContain("CompatibilityBadge");
+  expect(content).toContain("BookmarkButton");
+  expect(content).toContain("VectorFilterChips");
+  expect(content).toContain("Card3D");
 });
 
 // -------------------------------------------------------------

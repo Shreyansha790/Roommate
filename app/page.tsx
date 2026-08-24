@@ -44,8 +44,18 @@ export default async function HomePage() {
       {/* Curated Neighborhood Chemistry Grid */}
       <NeighborhoodEditorialGrid />
 
-      {/* The 3-Step Harmony Protocol */}
-      <HarmonyProtocolSection />
+      {/* The 3-Step Harmony Protocol with Vibe Onboarding */}
+      <div className="space-y-4">
+        <HarmonyProtocolSection />
+        <div className="text-center">
+          <Link
+            href="/onboarding"
+            className="text-xs font-bold text-coral-600 hover:underline"
+          >
+            Take 60-Second Vibe DNA Questionnaire →
+          </Link>
+        </div>
+      </div>
 
       {/* Featured Verified Spaces */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
