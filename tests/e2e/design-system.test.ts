@@ -46,7 +46,7 @@ designSystemSuite.tier1("Tailwind configuration contains luxury color tokens", (
   expect(content).toContain("cream");
   expect(content).toContain("#faf9f6");
   expect(content).toContain("coral");
-  expect(content).toContain("#e05d44");
+  expect(content).toContain("#d95338");
   expect(content).toContain("sage");
   expect(content).toContain("amber");
 });
@@ -68,7 +68,7 @@ designSystemSuite.tier1("Typography uses refined font smoothing and letter spaci
   const content = fs.readFileSync(cssPath, "utf-8");
 
   expect(content).toContain("-webkit-font-smoothing: antialiased");
-  expect(content).toContain("letter-spacing: -0.01em");
+  expect(content).toContain("letter-spacing: -0.02em");
 });
 
 designSystemSuite.tier1("Web Audio API Synthesizer frequency & waveform contracts", () => {
@@ -242,7 +242,7 @@ designSystemSuite.tier4("Scenario: Architectural Dashboard Shell loads with mode
 
   expect(layoutContent).toContain("scroll-smooth");
   expect(homeContent).toContain("AnimatedStats");
-  expect(homeContent).toContain("HeroArchitectural");
+  expect(homeContent).toContain("NueveHero");
   expect(homeContent).toContain("NeighborhoodEditorialGrid");
 });
 

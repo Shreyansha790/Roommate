@@ -1,74 +1,136 @@
 import Link from "next/link";
-import { ShieldCheck, Sparkles } from "lucide-react";
+import { Sparkles, ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-stone-200 bg-[#fbfaf8] text-stone-600 font-sans text-sm">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 lg:grid-cols-5">
-          {/* Brand */}
-          <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-coral-500 text-white font-bold shadow-warm-coral">
-                <Sparkles className="h-5 w-5" />
-              </div>
-              <span className="text-lg font-black tracking-tight text-stone-900">
-                Roommate<span className="text-coral-500">Sphere</span>
+    <footer className="border-t border-[#eae6de] bg-[#fcfbf9] font-sans text-stone-900 pt-16 pb-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          {/* Brand Column */}
+          <div className="lg:col-span-2 space-y-4">
+            <Link href="/" className="inline-block">
+              <span className="font-black text-2xl tracking-tighter text-stone-950">
+                roommatesphere<span className="text-coral-500">.</span>
               </span>
-            </div>
-            <p className="text-stone-500 text-sm max-w-sm leading-relaxed">
-              Find verified flats and compatible roommates with multi-vector lifestyle matching and 100% zero brokerage fees.
+            </Link>
+
+            <p className="text-xs text-stone-600 max-w-sm leading-relaxed">
+              Curated co-living residences designed with an emphasis on comfort, architectural style,
+              and flatmate compatibility. 100% direct connection with zero brokerage fees.
             </p>
-            <div className="flex items-center gap-3 text-xs text-stone-500 pt-1">
-              <span className="inline-flex items-center gap-1 text-emerald-600 font-semibold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                <ShieldCheck className="h-3.5 w-3.5" /> 100% Verified Listings
-              </span>
-              <span className="inline-flex items-center gap-1 text-coral-600 font-semibold bg-coral-50 px-2.5 py-1 rounded-full border border-coral-200">
-                Zero Brokerage
-              </span>
+
+            <div className="pt-2">
+              <Link
+                href="/post"
+                className="inline-flex items-center gap-1 text-xs font-black text-stone-950 hover:text-coral-500 transition"
+              >
+                <span>post your residence</span>
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </Link>
             </div>
           </div>
 
-          {/* Metro Zones */}
-          <div>
-            <h4 className="font-bold text-stone-900 mb-3 text-xs uppercase tracking-wider">Active Metros</h4>
-            <ul className="space-y-2 text-xs text-stone-500">
-              <li><Link href="/browse?city=Bangalore" className="hover:text-coral-500 transition">Bangalore (Indiranagar, HSR)</Link></li>
-              <li><Link href="/browse?city=Mumbai" className="hover:text-coral-500 transition">Mumbai (Bandra, Andheri)</Link></li>
-              <li><Link href="/browse?city=Delhi" className="hover:text-coral-500 transition">Delhi NCR (Hauz Khas, Gurgaon)</Link></li>
-              <li><Link href="/browse?city=Hyderabad" className="hover:text-coral-500 transition">Hyderabad (Hitec City, Gachibowli)</Link></li>
-              <li><Link href="/browse?city=Pune" className="hover:text-coral-500 transition">Pune (Koregaon Park, Viman Nagar)</Link></li>
+          {/* Column 1: Residences */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-black uppercase tracking-widest text-stone-950">
+              residences.
+            </h4>
+            <ul className="space-y-2 text-xs font-medium text-stone-600">
+              <li>
+                <Link href="/browse?type=single" className="hover:text-stone-950 transition">
+                  classic suites.
+                </Link>
+              </li>
+              <li>
+                <Link href="/browse?type=shared" className="hover:text-stone-950 transition">
+                  mini co-living.
+                </Link>
+              </li>
+              <li>
+                <Link href="/browse?type=entire_flat" className="hover:text-stone-950 transition">
+                  village lofts.
+                </Link>
+              </li>
+              <li>
+                <Link href="/browse" className="hover:text-stone-950 transition">
+                  all spaces.
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Platform */}
-          <div>
-            <h4 className="font-bold text-stone-900 mb-3 text-xs uppercase tracking-wider">Explore</h4>
-            <ul className="space-y-2 text-xs text-stone-500">
-              <li><Link href="/browse" className="hover:text-coral-500 transition">Browse Spaces</Link></li>
-              <li><Link href="/post" className="hover:text-coral-500 transition">Post a Room</Link></li>
-              <li><Link href="/agreement" className="hover:text-coral-500 transition">Roommate Agreement</Link></li>
-              <li><Link href="/onboarding" className="hover:text-coral-500 transition">Vibe Quiz</Link></li>
-              <li><Link href="/saved" className="hover:text-coral-500 transition">Saved Listings</Link></li>
+          {/* Column 2: Experiences */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-black uppercase tracking-widest text-stone-950">
+              experiences.
+            </h4>
+            <ul className="space-y-2 text-xs font-medium text-stone-600">
+              <li>
+                <Link href="/browse?city=Bangalore" className="hover:text-stone-950 transition">
+                  indiranagar.
+                </Link>
+              </li>
+              <li>
+                <Link href="/browse?city=Mumbai" className="hover:text-stone-950 transition">
+                  bandra west.
+                </Link>
+              </li>
+              <li>
+                <Link href="/browse?city=Delhi+NCR" className="hover:text-stone-950 transition">
+                  hauz khas.
+                </Link>
+              </li>
+              <li>
+                <Link href="/browse?city=Hyderabad" className="hover:text-stone-950 transition">
+                  hitec city.
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Safety & Trust */}
-          <div>
-            <h4 className="font-bold text-stone-900 mb-3 text-xs uppercase tracking-wider">Safety & Trust</h4>
-            <ul className="space-y-2 text-xs text-stone-500">
-              <li>Verified Host Badge</li>
-              <li>Phone Privacy Protocol</li>
-              <li>Escrow Deposit Protection</li>
-              <li>Community Guidelines</li>
+          {/* Column 3: Platform & Legal */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-black uppercase tracking-widest text-stone-950">
+              platform.
+            </h4>
+            <ul className="space-y-2 text-xs font-medium text-stone-600">
+              <li>
+                <Link href="/onboarding" className="hover:text-stone-950 transition">
+                  vibe dna quiz.
+                </Link>
+              </li>
+              <li>
+                <Link href="/agreement" className="hover:text-stone-950 transition">
+                  roommate agreement.
+                </Link>
+              </li>
+              <li>
+                <Link href="/messages" className="hover:text-stone-950 transition">
+                  direct chat.
+                </Link>
+              </li>
+              <li>
+                <Link href="/saved" className="hover:text-stone-950 transition">
+                  saved wishlist.
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 gap-4">
-          <p>© {new Date().getFullYear()} RoommateSphere Inc. Built for comfortable, human living.</p>
-          <div className="flex items-center gap-1 text-stone-400">
-            <span>Made with care for city dwellers</span>
+        {/* Bottom Hairline & Signature */}
+        <div className="border-t border-[#eae6de] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-medium text-stone-500">
+          <p>© 2026 RoommateSphere. All rights reserved. Zero Brokerage Guarantee.</p>
+          <div className="flex items-center gap-6">
+            <Link href="/browse" className="hover:text-stone-950 transition lowercase">
+              privacy policy.
+            </Link>
+            <Link href="/browse" className="hover:text-stone-950 transition lowercase">
+              cookies.
+            </Link>
+            <span className="text-stone-400 font-bold uppercase tracking-wider">
+              Nueve Living Architecture
+            </span>
           </div>
         </div>
       </div>

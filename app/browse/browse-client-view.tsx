@@ -82,13 +82,16 @@ export function BrowseClientView({
     <div className="space-y-8 font-sans text-stone-800">
       {/* Header & City Tabs */}
       <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#eae6de] pb-6">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">
-              Explore Living Spaces
+            <span className="text-xs font-bold text-coral-500 uppercase tracking-widest block mb-1">
+              verified co-living.
+            </span>
+            <h1 className="text-3xl sm:text-4xl font-black text-stone-950 tracking-tight">
+              residences<span className="text-coral-500">.</span>
             </h1>
-            <p className="text-xs sm:text-sm text-stone-500">
-              Showing {filteredListings.length} verified listings with zero brokerage
+            <p className="text-xs sm:text-sm text-stone-500 mt-1">
+              Showing {filteredListings.length} architectural residences with zero brokerage
             </p>
           </div>
 

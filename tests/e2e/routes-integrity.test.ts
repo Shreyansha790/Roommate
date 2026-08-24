@@ -33,8 +33,8 @@ routesIntegritySuite.tier1("Route 1: Root Home page ('/') exists and contains ar
   const content = fs.readFileSync(pagePath, "utf-8");
 
   expect(content).toContain("export default");
-  expect(content).toContain("HeroArchitectural");
-  expect(content).toContain("HarmonyProtocolSection");
+  expect(content).toContain("NueveHero");
+  expect(content).toContain("NueveResidences");
   expect(content).toContain("AnimatedStats");
 });
 

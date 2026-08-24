@@ -3,15 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ProfileMenu } from "./profile-menu";
-import {
-  Search,
-  Sparkles,
-  Compass,
-  PlusCircle,
-  MessageSquare,
-  FileText,
-  Bookmark
-} from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 
 export function TopNavClient({
   user,
@@ -29,62 +21,66 @@ export function TopNavClient({
   };
 
   const navLinks = [
-    { href: "/browse", label: "Explore", icon: Compass },
-    { href: "/post", label: "Post a Room", icon: PlusCircle },
-    { href: "/messages", label: "Messages", icon: MessageSquare },
-    { href: "/agreement", label: "Agreement", icon: FileText },
-    { href: "/saved", label: "Saved", icon: Bookmark }
+    { href: "/browse", label: "residences." },
+    { href: "/post", label: "post a room." },
+    { href: "/onboarding", label: "vibe match." },
+    { href: "/messages", label: "chat." },
+    { href: "/agreement", label: "agreement." },
+    { href: "/saved", label: "saved." }
   ];
 
   return (
-    <header className="sticky top-3 z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="glass-capsule rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 flex items-center justify-between transition-all">
+    <header className="sticky top-4 z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="glass-capsule rounded-full px-5 sm:px-7 py-3 flex items-center justify-between transition-all">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-coral-600 to-coral-400 text-white shadow-sm transition-transform group-hover:scale-105">
-            <Sparkles className="h-4 w-4" />
-          </div>
-          <span className="font-black text-stone-900 text-base tracking-tight">
-            Roommate<span className="text-coral-500 font-bold">Sphere</span>
+        <Link href="/" className="flex items-center gap-2 group shrink-0">
+          <span className="font-black text-stone-950 text-lg tracking-tighter">
+            Roommate<span className="text-coral-500 font-black">Sphere.</span>
           </span>
         </Link>
 
-        {/* Center Search Pill Trigger */}
-        <button
-          onClick={handleOpenSearch}
-          className="hidden md:flex items-center gap-2.5 rounded-full bg-stone-100/80 hover:bg-stone-100 px-4 py-1.5 text-xs text-stone-500 border border-stone-200/60 transition shadow-inner"
-        >
-          <Search className="h-3.5 w-3.5 text-coral-500" />
-          <span>Search with AI (e.g. 2BHK in Indiranagar)</span>
-          <kbd className="rounded bg-white px-1.5 py-0.5 text-[10px] font-semibold text-stone-400 border border-stone-200 shadow-sm">
-            ⌘K
-          </kbd>
-        </button>
-
-        {/* Nav Links */}
-        <nav className="hidden lg:flex items-center gap-1 text-xs font-semibold text-stone-600">
+        {/* Minimalist Nav Links */}
+        <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold tracking-tight text-stone-600">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
-            const Icon = link.icon;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition ${
+                className={`transition lowercase ${
                   isActive
-                    ? "bg-stone-900 text-white shadow-sm"
-                    : "hover:text-stone-900 hover:bg-stone-100/60"
+                    ? "text-stone-950 font-bold underline underline-offset-8 decoration-coral-500"
+                    : "hover:text-stone-950"
                 }`}
               >
-                <Icon className="h-3.5 w-3.5 opacity-80" />
-                <span>{link.label}</span>
+                {link.label}
               </Link>
             );
           })}
         </nav>
 
-        {/* Right Auth / Profile Menu */}
-        <div className="flex items-center gap-2.5">
+        {/* Right Search & Profile CTA */}
+        <div className="flex items-center gap-3">
+          {/* Quick Search */}
+          <button
+            onClick={handleOpenSearch}
+            className="flex items-center gap-2 rounded-full bg-stone-100 hover:bg-stone-200/80 px-3.5 py-1.5 text-xs text-stone-600 border border-stone-200 transition"
+            aria-label="Search"
+          >
+            <Search className="h-3.5 w-3.5 text-stone-500" />
+            <span className="hidden sm:inline">search.</span>
+            <kbd className="hidden sm:inline rounded bg-white px-1.5 py-0.5 text-[9px] font-bold text-stone-400 border border-stone-200">
+              ⌘K
+            </kbd>
+          </button>
+
+          <Link
+            href="/post"
+            className="hidden sm:inline-flex text-xs font-bold bg-stone-950 text-white hover:bg-coral-500 px-4 py-2 rounded-full transition shadow-sm"
+          >
+            post a room.
+          </Link>
+
           {user ? (
             <ProfileMenu
               name={name || user.email?.split("@")[0] || "Account"}
@@ -92,20 +88,12 @@ export function TopNavClient({
               avatarUrl={avatarUrl || null}
             />
           ) : (
-            <div className="flex items-center gap-2">
-              <Link
-                href="/login"
-                className="text-xs font-bold text-stone-700 hover:text-stone-900 px-3 py-1.5 transition"
-              >
-                Sign In
-              </Link>
-              <Link
-                href="/signup"
-                className="neo-button px-4 py-1.5 text-xs font-bold shadow-luxury-coral"
-              >
-                Get Started
-              </Link>
-            </div>
+            <Link
+              href="/login"
+              className="text-xs font-bold text-stone-950 hover:text-coral-500 px-3 py-1.5 transition lowercase"
+            >
+              sign in.
+            </Link>
           )}
         </div>
       </div>
